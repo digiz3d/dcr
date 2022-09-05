@@ -1,0 +1,37 @@
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.medical-files-list {
+  display: flex;
+  width: 200px;
+  height: max-content;
+  height: 100%;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  border-right: 1px solid black;
+}
+
+.medical-files-list button {
+  text-align: left;
+  padding: 5px;
+}
+
+.medical-files-list button.plus {
+  text-align: center;
+}
+
+.current-medial-view {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow-y: scroll;
+}
