@@ -31,6 +31,8 @@ export default function Teeth({
               thermicTest: '/',
               electricTest: '/',
               percutionTest: 'n',
+              palpationTestL: 'n',
+              palpationTestV: 'n',
             },
           ],
         })

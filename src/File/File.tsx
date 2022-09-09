@@ -1,29 +1,43 @@
-import { Document, Page, PDFViewer, Text, View } from "@react-pdf/renderer";
+import { Document, Page, PDFViewer, Text, View } from '@react-pdf/renderer'
 
-import { MedicalFile } from "../types";
+import { MedicalFile } from '../types'
 
-import "./File.css";
-import Teeth from "./Teeth/Teeth";
-import TeethTests from "./TeethTests/TeethTests";
+import './File.css'
+import Teeth from './Teeth/Teeth'
+import TeethTests from './TeethTests/TeethTests'
 
 export default function File({
   file,
   onChange,
 }: {
-  file: MedicalFile;
-  onChange: (newMedicalFile: MedicalFile) => void;
+  file: MedicalFile
+  onChange: (newMedicalFile: MedicalFile) => void
 }) {
   return (
     <div className="file-form">
       <fieldset>
         <legend>Genre</legend>
         <div>
-          <input type="radio" id="homme" name="drone" value="Homme" />
+          <input
+            type="radio"
+            id="homme"
+            name="drone"
+            value="m"
+            checked={file.gender === 'm'}
+            onChange={(e) => onChange({ ...file, gender: 'm' })}
+          />
           <label htmlFor="homme">Homme</label>
         </div>
 
         <div>
-          <input type="radio" id="femme" name="drone" value="Femme" />
+          <input
+            type="radio"
+            id="femme"
+            name="drone"
+            value="f"
+            checked={file.gender === 'f'}
+            onChange={(e) => onChange({ ...file, gender: 'f' })}
+          />
           <label htmlFor="femme">Femme</label>
         </div>
       </fieldset>
@@ -54,7 +68,7 @@ export default function File({
         Date de naissance
         <input
           type="date"
-          value={new Date().toISOString().split("T")[0]}
+          value={new Date().toISOString().split('T')[0]}
           onChange={(e) =>
             onChange({ ...file, birthDate: new Date(e.target.value) })
           }
@@ -157,7 +171,7 @@ export default function File({
           {file.treatment}
         </textarea>
       </label>
-      <PDFViewer>
+      <PDFViewer showToolbar>
         <Document>
           <Page size="A4">
             <View>
@@ -167,5 +181,5 @@ export default function File({
         </Document>
       </PDFViewer>
     </div>
-  );
+  )
 }

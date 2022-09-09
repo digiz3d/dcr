@@ -1,10 +1,10 @@
 export type MedicalFile = {
-  patientFirstName?: string
-  patientLastName?: string
+  patientFirstName: string
+  patientLastName: string
   anteriorMedical?: string
   medications?: string
   allergies?: string
-  gender?: 'Homme' | 'Femme'
+  gender?: string // 'Homme' | 'Femme'
   birthDate?: Date
   teeth: {
     /**
