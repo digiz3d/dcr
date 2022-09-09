@@ -67,14 +67,6 @@ export default function TeethTests({
           <tr key={t.id}>
             <td>{t.id}</td>
             <td>
-              {/* <Select
-                currentValue={t.thermicTest}
-                defaultValue="/"
-                options={["/", "positif", "negatif"]}
-                onChangeTooth={(v) =>
-                  onChangeTooth(t.id, "thermicTest", v.toString())
-                }
-              /> */}
               <div className="radio-list">
                 <div className="item">
                   <input

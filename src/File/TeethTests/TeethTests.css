@@ -78,5 +78,7 @@
 }
 
 .TeethTests .physiologic {
+  display: inline !important;
+  margin: 0px !important;
   max-width: 150px;
 }
