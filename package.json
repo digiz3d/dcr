@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "main": "./public/main.js",
+  "author": {
+    "name": "Léandre Daumont",
+    "email": "leandre.daumont@gmail.com",
+    "url": "https://digiz3d.github.io"
+  },
   "dependencies": {
     "@react-pdf/renderer": "^3.0.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
@@ -16,8 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
+    "typescript": "^4.4.2"
   },
   "scripts": {
     "build": "yarn build:react && yarn build:electron",
@@ -61,5 +62,6 @@
       "./public/preload.js",
       "./public/icon.png"
     ]
-  }
+  },
+  "homepage": "./"
 }
