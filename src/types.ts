@@ -22,7 +22,7 @@ export type MedicalFile = {
     percutionTest?: string // "sensible" | "positif" | "negatif";
     palpationTestV?: string // "positif" | "negatif";
     palpationTestL?: string // "positif" | "negatif";
-    parodontalProbing?: string // "physiologique" | string;
+    parodontalProbing: 'physiologique' | string
     /**
      * 0-4
      */

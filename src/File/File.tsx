@@ -1,10 +1,9 @@
-import type { MedicalFile } from "../types"
+import type { MedicalFile } from '../types'
 
-import Teeth from "./Teeth"
-import TeethTests from "./TeethTests"
+import Teeth from './Teeth'
+import TeethTests from './TeethTests'
 
-import PDFGenerator from "./PDFGenerator"
-import style from "./File.module.scss"
+import PDFGenerator from './PDFGenerator'
 
 export default function File({
   file,
@@ -14,8 +13,8 @@ export default function File({
   onChange: (newMedicalFile: MedicalFile) => void
 }) {
   return (
-    <div className={style.form}>
-      <fieldset>
+    <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full">
+      <fieldset className="border p-2">
         <legend>Genre</legend>
         <div>
           <input
@@ -23,10 +22,12 @@ export default function File({
             id="homme"
             name="drone"
             value="m"
-            checked={file.gender === "m"}
-            onChange={(e) => onChange({ ...file, gender: "m" })}
+            checked={file.gender === 'm'}
+            onChange={(e) => onChange({ ...file, gender: 'm' })}
           />
-          <label htmlFor="homme">Homme</label>
+          <label className="pl-2" htmlFor="homme">
+            Homme
+          </label>
         </div>
 
         <div>
@@ -35,16 +36,19 @@ export default function File({
             id="femme"
             name="drone"
             value="f"
-            checked={file.gender === "f"}
-            onChange={(e) => onChange({ ...file, gender: "f" })}
+            checked={file.gender === 'f'}
+            onChange={(e) => onChange({ ...file, gender: 'f' })}
           />
-          <label htmlFor="femme">Femme</label>
+          <label className="pl-2" htmlFor="femme">
+            Femme
+          </label>
         </div>
       </fieldset>
 
       <label>
         Prénom
         <input
+          className="block p-1 border border-gray-500"
           type="text"
           value={file.patientFirstName}
           onChange={(e) =>
@@ -56,6 +60,7 @@ export default function File({
       <label>
         Nom
         <input
+          className="block p-1 border border-gray-500"
           type="text"
           value={file.patientLastName}
           onChange={(e) =>
@@ -67,8 +72,9 @@ export default function File({
       <label>
         Date de naissance
         <input
+          className="block p-1 border border-gray-500"
           type="date"
-          value={new Date().toISOString().split("T")[0]}
+          value={new Date().toISOString().split('T')[0]}
           onChange={(e) =>
             onChange({ ...file, birthDate: new Date(e.target.value) })
           }
@@ -82,6 +88,7 @@ export default function File({
       <label>
         Antécédents médicaux
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) =>
             onChange({ ...file, anteriorMedical: e.target.value })
           }
@@ -93,6 +100,7 @@ export default function File({
       <label>
         Medicaments
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, medications: e.target.value })}
         >
           {file.medications}
@@ -102,6 +110,7 @@ export default function File({
       <label>
         Allergies
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, allergies: e.target.value })}
         >
           {file.allergies}
@@ -111,6 +120,7 @@ export default function File({
       <label>
         Historique dentaire
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, anamnesis: e.target.value })}
         >
           {file.anamnesis}
@@ -122,6 +132,7 @@ export default function File({
       <label>
         Examen clinique
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, clinicalExam: e.target.value })}
         >
           {file.clinicalExam}
@@ -135,6 +146,7 @@ export default function File({
       <label>
         Examen radiographique RA
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, radioExamRA: e.target.value })}
         >
           {file.radioExamRA}
@@ -144,6 +156,7 @@ export default function File({
       <label>
         Examen radiographique CBCT
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, radioExamCBCT: e.target.value })}
         >
           {file.radioExamCBCT}
@@ -155,6 +168,7 @@ export default function File({
       <label>
         Diagnostic
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, diagnostic: e.target.value })}
         >
           {file.diagnostic}
@@ -166,6 +180,7 @@ export default function File({
       <label>
         Traitement envisagé
         <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ ...file, treatment: e.target.value })}
         >
           {file.treatment}

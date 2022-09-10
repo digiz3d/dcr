@@ -32,7 +32,7 @@
       padding: 2px;
     }
 
-    input[type="text"] {
+    input[type='text'] {
       max-width: 30px;
       text-align: center;
       margin: 0 0 0 2px;
@@ -40,39 +40,6 @@
     }
     input:disabled {
       background-color: silver;
-    }
-  }
-}
-
-.physiologic {
-  display: inline !important;
-  margin: 0px !important;
-  max-width: 150px;
-}
-
-.palpationGrid {
-  display: grid;
-  gap: 5px;
-  margin: 5px;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.mobility {
-  display: flex;
-  flex-direction: row;
-
-  input {
-    cursor: pointer;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: column-reverse;
-    cursor: pointer;
-
-    label {
-      user-select: none;
-      cursor: pointer;
     }
   }
 }
