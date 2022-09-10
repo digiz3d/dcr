@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react'
-import type { MedicalFile } from '../../types'
+import React, { useCallback } from "react"
+import type { MedicalFile } from "../../types"
 
-import './Teeth.css'
+import style from "./index.module.scss"
 
 const upperTeeth = [
   18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28,
@@ -28,11 +28,11 @@ export default function Teeth({
             ...(file.teeth ? file.teeth : []),
             {
               id: Number(e.target.value),
-              thermicTest: '/',
-              electricTest: '/',
-              percutionTest: 'n',
-              palpationTestL: 'n',
-              palpationTestV: 'n',
+              thermicTest: "/",
+              electricTest: "/",
+              percutionTest: "n",
+              palpationTestL: "n",
+              palpationTestV: "n",
             },
           ],
         })
@@ -44,16 +44,16 @@ export default function Teeth({
         })
       }
     },
-    [file, onChange]
+    [file, onChange],
   )
 
   return (
-    <table className="teeth">
+    <table className={style.teeth}>
       <tbody>
         <tr>
           {upperTeeth.map((tooth, i) => (
             <td key={i}>
-              <label>
+              <label className={style.cell}>
                 {tooth}
                 <input
                   checked={activeTeethIds.includes(tooth)}
@@ -69,7 +69,7 @@ export default function Teeth({
         <tr>
           {lowerTeeth.map((tooth, i) => (
             <td key={i}>
-              <label>
+              <label className={style.cell}>
                 {tooth}
                 <input
                   checked={activeTeethIds.includes(tooth)}

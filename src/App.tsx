@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from "react"
 
-import File from './File/File'
-import { MedicalFile } from './types'
+import File from "./File/File"
+import type { MedicalFile } from "./types"
 
-import './App.css'
+import style from "./App.module.scss"
 
 function App() {
   const [medicalFiles, setMedicalFiles] = useState<MedicalFile[]>([])
@@ -12,26 +12,26 @@ function App() {
   const onChange = useCallback(
     (newFile: MedicalFile) => {
       setMedicalFiles((c) =>
-        c.map((item, i) => (i === currentMedicalFileIndex ? newFile : item))
+        c.map((item, i) => (i === currentMedicalFileIndex ? newFile : item)),
       )
     },
-    [currentMedicalFileIndex]
+    [currentMedicalFileIndex],
   )
 
   return (
-    <div className="main">
-      <div className="medical-files-list">
+    <div className={style.main}>
+      <div className={style.list}>
         {medicalFiles.map((f, i) => (
           <button key={i} onClick={() => setCurrentMedicalFileIndex(i)}>
             {i} - {f.patientFirstName} {f.patientLastName}
           </button>
         ))}
         <button
-          className="plus"
+          className={style.plus}
           onClick={() => {
             setMedicalFiles((c) => [
               ...c,
-              { patientFirstName: '', patientLastName: '', teeth: [] },
+              { patientFirstName: "", patientLastName: "", teeth: [] },
             ])
             setCurrentMedicalFileIndex(medicalFiles.length)
           }}
@@ -39,7 +39,7 @@ function App() {
           +
         </button>
       </div>
-      <div className="current-medial-view">
+      <div className={style.current}>
         {medicalFiles[currentMedicalFileIndex] && (
           <File
             file={medicalFiles[currentMedicalFileIndex]}

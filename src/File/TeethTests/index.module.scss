@@ -1,0 +1,78 @@
+.container {
+  border-collapse: collapse;
+  border: 3px solid black;
+
+  th {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+  }
+
+  td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+    &:nth-child(8) {
+      border-right: 3px solid black;
+    }
+  }
+}
+
+.radioList {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    label {
+      padding: 2px;
+    }
+
+    input[type="text"] {
+      max-width: 30px;
+      text-align: center;
+      margin: 0 0 0 2px;
+      padding: 2px;
+    }
+    input:disabled {
+      background-color: silver;
+    }
+  }
+}
+
+.physiologic {
+  display: inline !important;
+  margin: 0px !important;
+  max-width: 150px;
+}
+
+.palpationGrid {
+  display: grid;
+  gap: 5px;
+  margin: 5px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.mobility {
+  display: flex;
+  flex-direction: row;
+
+  input {
+    cursor: pointer;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column-reverse;
+    cursor: pointer;
+
+    label {
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+}
