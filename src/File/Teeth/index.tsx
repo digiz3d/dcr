@@ -15,7 +15,7 @@ export default function Teeth({
   onChange,
 }: {
   file: MedicalFile
-  onChange: (newMedicalFile: MedicalFile) => void
+  onChange: (newMedicalFile: Partial<MedicalFile>) => void
 }) {
   const activeTeethIds = file.teeth?.map((t) => t.id) ?? []
 
@@ -23,7 +23,6 @@ export default function Teeth({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.checked) {
         onChange({
-          ...file,
           teeth: [
             ...(file.teeth ? file.teeth : []),
             {
@@ -40,7 +39,6 @@ export default function Teeth({
         })
       } else {
         onChange({
-          ...file,
           teeth:
             file.teeth?.filter((t) => t.id.toString() !== e.target.value) ?? [],
         })

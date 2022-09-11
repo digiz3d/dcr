@@ -1,4 +1,5 @@
 import type { MedicalFile } from '../types'
+import Photo from './Photo'
 
 import Teeth from './Teeth'
 import TeethTests from './TeethTests'
@@ -8,7 +9,7 @@ export default function File({
   onChange,
 }: {
   file: MedicalFile
-  onChange: (newMedicalFile: MedicalFile) => void
+  onChange: (file: Partial<MedicalFile>) => void
 }) {
   return (
     <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full rounded-md">
@@ -22,7 +23,7 @@ export default function File({
             name="drone"
             value="m"
             checked={file.gender === 'm'}
-            onChange={(e) => onChange({ ...file, gender: 'm' })}
+            onChange={(e) => onChange({ gender: 'm' })}
           />
           <label className="pl-2 cursor-pointer" htmlFor="homme">
             Homme
@@ -37,7 +38,7 @@ export default function File({
             name="drone"
             value="f"
             checked={file.gender === 'f'}
-            onChange={(e) => onChange({ ...file, gender: 'f' })}
+            onChange={(e) => onChange({ gender: 'f' })}
           />
           <label className="pl-2 cursor-pointer" htmlFor="femme">
             Femme
@@ -51,9 +52,7 @@ export default function File({
           className="block p-1 border border-gray-500"
           type="text"
           value={file.patientFirstName}
-          onChange={(e) =>
-            onChange({ ...file, patientFirstName: e.target.value })
-          }
+          onChange={(e) => onChange({ patientFirstName: e.target.value })}
         />
       </label>
 
@@ -63,9 +62,7 @@ export default function File({
           className="block p-1 border border-gray-500"
           type="text"
           value={file.patientLastName}
-          onChange={(e) =>
-            onChange({ ...file, patientLastName: e.target.value })
-          }
+          onChange={(e) => onChange({ patientLastName: e.target.value })}
         />
       </label>
 
@@ -75,9 +72,7 @@ export default function File({
           className="block p-1 border border-gray-500"
           type="date"
           value={file.birthDate.toISOString().split('T')[0]}
-          onChange={(e) =>
-            onChange({ ...file, birthDate: new Date(e.target.value) })
-          }
+          onChange={(e) => onChange({ birthDate: new Date(e.target.value) })}
         />
       </label>
 
@@ -89,9 +84,7 @@ export default function File({
         Antécédents médicaux
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) =>
-            onChange({ ...file, anteriorMedical: e.target.value })
-          }
+          onChange={(e) => onChange({ anteriorMedical: e.target.value })}
         >
           {file.anteriorMedical}
         </textarea>
@@ -101,7 +94,7 @@ export default function File({
         Medicaments
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, medications: e.target.value })}
+          onChange={(e) => onChange({ medications: e.target.value })}
         >
           {file.medications}
         </textarea>
@@ -111,7 +104,7 @@ export default function File({
         Allergies
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, allergies: e.target.value })}
+          onChange={(e) => onChange({ allergies: e.target.value })}
         >
           {file.allergies}
         </textarea>
@@ -121,7 +114,7 @@ export default function File({
         Historique dentaire
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, anamnesis: e.target.value })}
+          onChange={(e) => onChange({ anamnesis: e.target.value })}
         >
           {file.anamnesis}
         </textarea>
@@ -133,7 +126,7 @@ export default function File({
         Examen clinique
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, clinicalExam: e.target.value })}
+          onChange={(e) => onChange({ clinicalExam: e.target.value })}
         >
           {file.clinicalExam}
         </textarea>
@@ -143,11 +136,13 @@ export default function File({
 
       <hr />
 
+      <Photo file={file} onChange={onChange} />
+
       <label>
         Examen radiographique RA
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, radioExamRA: e.target.value })}
+          onChange={(e) => onChange({ radioExamRA: e.target.value })}
         >
           {file.radioExamRA}
         </textarea>
@@ -157,7 +152,7 @@ export default function File({
         Examen radiographique CBCT
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, radioExamCBCT: e.target.value })}
+          onChange={(e) => onChange({ radioExamCBCT: e.target.value })}
         >
           {file.radioExamCBCT}
         </textarea>
@@ -169,7 +164,7 @@ export default function File({
         Diagnostic
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, diagnostic: e.target.value })}
+          onChange={(e) => onChange({ diagnostic: e.target.value })}
         >
           {file.diagnostic}
         </textarea>
@@ -181,7 +176,7 @@ export default function File({
         Traitement envisagé
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
-          onChange={(e) => onChange({ ...file, treatment: e.target.value })}
+          onChange={(e) => onChange({ treatment: e.target.value })}
         >
           {file.treatment}
         </textarea>
@@ -190,7 +185,7 @@ export default function File({
         className="inline-block font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
           const { generatePdf } = await import('../utils/generatePdf')
-          await generatePdf()
+          await generatePdf(file)
         }}
       >
         Sauvegarder PDF

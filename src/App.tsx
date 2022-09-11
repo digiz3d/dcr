@@ -10,9 +10,13 @@ function App() {
   const [currentMedicalFileIndex, setCurrentMedicalFileIndex] = useState(0)
 
   const onChange = useCallback(
-    (newFile: MedicalFile) => {
+    (newFileProperties: Partial<MedicalFile>) => {
       setMedicalFiles((c) =>
-        c.map((item, i) => (i === currentMedicalFileIndex ? newFile : item)),
+        c.map((item, i) =>
+          i === currentMedicalFileIndex
+            ? { ...item, ...newFileProperties }
+            : item,
+        ),
       )
     },
     [currentMedicalFileIndex],

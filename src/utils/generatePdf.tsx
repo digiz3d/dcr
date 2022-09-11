@@ -1,8 +1,9 @@
-import { pdf, Document, View, Text, Page } from '@react-pdf/renderer'
+import { pdf, Document, View, Text, Page, Image } from '@react-pdf/renderer'
 import { save } from '@tauri-apps/api/dialog'
 import { writeBinaryFile } from '@tauri-apps/api/fs'
+import { MedicalFile } from '../types'
 
-export async function generatePdf() {
+export async function generatePdf(file: MedicalFile) {
   const path = await save({
     title: 'Enregistrer le document',
     defaultPath: './document.pdf',
@@ -18,6 +19,7 @@ export async function generatePdf() {
         <View>
           <Text>Section #2</Text>
         </View>
+        {file.photo && <Image source={file.photo} />}
       </Page>
     </Document>,
   ).toBlob()

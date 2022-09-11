@@ -7,7 +7,7 @@ export default function TeethTests({
   onChange,
 }: {
   file: MedicalFile
-  onChange: (newMedicalFile: MedicalFile) => void
+  onChange: (newMedicalFile: Partial<MedicalFile>) => void
 }) {
   function onChangeTooth<
     X extends MedicalFile['teeth'][number],
@@ -16,7 +16,6 @@ export default function TeethTests({
   >(teethId: number, field: F, newValue: T) {
     console.log('updating', teethId, field, newValue)
     onChange({
-      ...file,
       teeth: file.teeth?.map((t) =>
         t.id === teethId ? { ...t, [field]: newValue } : t,
       ),
