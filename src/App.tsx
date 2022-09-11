@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { useCallback, useState } from 'react'
 
 import File from './File/File'
+import NoFile from './NoFile/NoFile'
 import type { MedicalFile } from './types'
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      <div className="w-64 p-2">
+      <div className="w-64 p-2 flex-shrink-0">
         <div className="flex flex-col gap-2 sticky top-2">
           <h1 className="text-lg">Dossiers des patients</h1>
           {medicalFiles.map((f, i) => (
@@ -65,11 +66,13 @@ function App() {
         </div>
       </div>
       <div className="flex flex-1">
-        {medicalFiles[currentMedicalFileIndex] && (
+        {medicalFiles[currentMedicalFileIndex] ? (
           <File
             file={medicalFiles[currentMedicalFileIndex]}
             onChange={onChange}
           />
+        ) : (
+          <NoFile />
         )}
       </div>
     </div>
