@@ -3,8 +3,6 @@ import type { MedicalFile } from '../types'
 import Teeth from './Teeth'
 import TeethTests from './TeethTests'
 
-import PDFGenerator from './PDFGenerator'
-
 export default function File({
   file,
   onChange,
@@ -13,11 +11,12 @@ export default function File({
   onChange: (newMedicalFile: MedicalFile) => void
 }) {
   return (
-    <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full">
+    <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full rounded-md">
       <fieldset className="border p-2">
         <legend>Genre</legend>
         <div>
           <input
+            className="cursor-pointer"
             type="radio"
             id="homme"
             name="drone"
@@ -25,13 +24,14 @@ export default function File({
             checked={file.gender === 'm'}
             onChange={(e) => onChange({ ...file, gender: 'm' })}
           />
-          <label className="pl-2" htmlFor="homme">
+          <label className="pl-2 cursor-pointer" htmlFor="homme">
             Homme
           </label>
         </div>
 
         <div>
           <input
+            className="cursor-pointer"
             type="radio"
             id="femme"
             name="drone"
@@ -39,7 +39,7 @@ export default function File({
             checked={file.gender === 'f'}
             onChange={(e) => onChange({ ...file, gender: 'f' })}
           />
-          <label className="pl-2" htmlFor="femme">
+          <label className="pl-2 cursor-pointer" htmlFor="femme">
             Femme
           </label>
         </div>
@@ -74,7 +74,7 @@ export default function File({
         <input
           className="block p-1 border border-gray-500"
           type="date"
-          value={new Date().toISOString().split('T')[0]}
+          value={file.birthDate.toISOString().split('T')[0]}
           onChange={(e) =>
             onChange({ ...file, birthDate: new Date(e.target.value) })
           }
@@ -186,7 +186,15 @@ export default function File({
           {file.treatment}
         </textarea>
       </label>
-      <PDFGenerator />
+      <div
+        className="inline-block font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
+        onClick={async () => {
+          const { generatePdf } = await import('../utils/generatePdf')
+          await generatePdf()
+        }}
+      >
+        Sauvegarder PDF
+      </div>
     </div>
   )
 }

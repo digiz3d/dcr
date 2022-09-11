@@ -40,7 +40,22 @@ function App() {
             onClick={() => {
               setMedicalFiles((c) => [
                 ...c,
-                { patientFirstName: '', patientLastName: '', teeth: [] },
+                {
+                  allergies: '',
+                  anamnesis: '',
+                  anteriorMedical: '',
+                  birthDate: new Date(),
+                  clinicalExam: '',
+                  diagnostic: '',
+                  gender: '',
+                  medications: '',
+                  patientFirstName: '',
+                  patientLastName: '',
+                  radioExamCBCT: '',
+                  radioExamRA: '',
+                  teeth: [],
+                  treatment: '',
+                },
               ])
               setCurrentMedicalFileIndex(medicalFiles.length)
             }}
@@ -49,7 +64,7 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="flex flex-1 overflow-scroll">
+      <div className="flex flex-1">
         {medicalFiles[currentMedicalFileIndex] && (
           <File
             file={medicalFiles[currentMedicalFileIndex]}

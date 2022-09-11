@@ -34,6 +34,7 @@ export default function Teeth({
               palpationTestL: 'n',
               palpationTestV: 'n',
               parodontalProbing: 'physiologique',
+              mobility: 0,
             },
           ],
         })

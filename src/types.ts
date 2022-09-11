@@ -1,11 +1,11 @@
 export type MedicalFile = {
   patientFirstName: string
   patientLastName: string
-  anteriorMedical?: string
-  medications?: string
-  allergies?: string
-  gender?: string // 'Homme' | 'Femme'
-  birthDate?: Date
+  anteriorMedical: string
+  medications: string
+  allergies: string
+  gender: string // 'Homme' | 'Femme'
+  birthDate: Date
   teeth: {
     /**
      * 11-18
@@ -19,20 +19,20 @@ export type MedicalFile = {
      * if positive, 1-80
      */
     electricTest: string // "/" | "negatif" | number;
-    percutionTest?: string // "sensible" | "positif" | "negatif";
-    palpationTestV?: string // "positif" | "negatif";
-    palpationTestL?: string // "positif" | "negatif";
+    percutionTest: string // "sensible" | "positif" | "negatif";
+    palpationTestV: string // "positif" | "negatif";
+    palpationTestL: string // "positif" | "negatif";
     parodontalProbing: 'physiologique' | string
     /**
      * 0-4
      */
-    mobility?: number
+    mobility: number
   }[]
-  anamnesis?: string
-  clinicalExam?: string
+  anamnesis: string
+  clinicalExam: string
   photo?: string
-  radioExamRA?: string
-  radioExamCBCT?: string
-  diagnostic?: string
-  treatment?: string
+  radioExamRA: string
+  radioExamCBCT: string
+  diagnostic: string
+  treatment: string
 }

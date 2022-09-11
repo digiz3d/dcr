@@ -7,11 +7,16 @@
   },
   "package": {
     "productName": "DCR",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "dialog": {
+        "save": true
+      },
+      "fs": {
+        "writeFile": true
+      }
     },
     "bundle": {
       "active": true,
