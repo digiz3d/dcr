@@ -51,6 +51,8 @@ function App() {
                   anteriorMedical: '',
                   birthDate: new Date(),
                   clinicalExam: '',
+                  dentistCity: '',
+                  dentistName: '',
                   diagnostic: '',
                   gender: '',
                   medications: '',

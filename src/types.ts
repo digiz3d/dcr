@@ -1,6 +1,8 @@
 export type MedicalFile = {
   patientFirstName: string
   patientLastName: string
+  dentistName: string
+  dentistCity: string
   anteriorMedical: string
   medications: string
   allergies: string

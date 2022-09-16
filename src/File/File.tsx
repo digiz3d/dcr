@@ -1,4 +1,6 @@
+import { PDFViewer } from '@react-pdf/renderer'
 import type { MedicalFile } from '../types'
+import Report from '../utils/Report'
 import Photo from './Photo'
 
 import Teeth from './Teeth'
@@ -13,6 +15,26 @@ export default function File({
 }) {
   return (
     <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full rounded-md">
+      <label>
+        Dentiste
+        <input
+          className="block p-1 border border-gray-500"
+          type="text"
+          value={file.dentistName}
+          onChange={(e) => onChange({ dentistName: e.target.value })}
+        />
+      </label>
+
+      <label>
+        Ville dentiste
+        <input
+          className="block p-1 border border-gray-500"
+          type="text"
+          value={file.dentistCity}
+          onChange={(e) => onChange({ dentistCity: e.target.value })}
+        />
+      </label>
+
       <fieldset className="border p-2">
         <legend>Genre</legend>
         <div>
@@ -194,6 +216,11 @@ export default function File({
       >
         Sauvegarder PDF
       </div>
+      {process.env.NODE_ENV !== 'production' && (
+        <PDFViewer className="h-[1000px]">
+          <Report file={file} />
+        </PDFViewer>
+      )}
     </div>
   )
 }
