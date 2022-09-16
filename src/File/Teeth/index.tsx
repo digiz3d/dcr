@@ -10,7 +10,42 @@ const lowerTeeth = [
   48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38,
 ]
 
-const retreatmentOrder = [...upperTeeth, ...lowerTeeth.slice().reverse()]
+const retreatmentOrder = [
+  ...upperTeeth.slice(),
+  ...lowerTeeth.slice().reverse(),
+]
+
+type TreatmentType = MedicalFile['teeth'][number]['treatmentType']
+
+function Select<T extends string = string>({
+  currentValue,
+  defaultValue,
+  onChange,
+  options,
+  labels,
+}: {
+  currentValue?: T
+  defaultValue: T
+  onChange: (newValue: T) => void
+  options: T[]
+  labels: string[]
+}) {
+  return (
+    <select
+      defaultValue={defaultValue}
+      value={currentValue}
+      onChange={(e) => onChange(e.target.value as T)}
+    >
+      {options.map((o, i) => (
+        <option key={i} value={o}>
+          {labels[i]}
+        </option>
+      ))}
+    </select>
+  )
+}
+
+// traitement, retraitement, avis, chirurgie
 
 export default function Teeth({
   file,
@@ -36,7 +71,7 @@ export default function Teeth({
               palpationTestV: 'n',
               parodontalProbing: 'physiologique',
               mobility: 0,
-              isRetreatment: false,
+              treatmentType: 'retreatment',
             },
           ],
         })
@@ -46,21 +81,6 @@ export default function Teeth({
             file.teeth?.filter((t) => t.id.toString() !== e.target.value) ?? [],
         })
       }
-    },
-    [file, onChange],
-  )
-
-  const onChangeTreatmentType = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange({
-        teeth: file.teeth.map((t) => ({
-          ...t,
-          isRetreatment:
-            t.id.toString() === e.target.value
-              ? e.target.checked
-              : t.isRetreatment,
-        })),
-      })
     },
     [file, onChange],
   )
@@ -105,33 +125,34 @@ export default function Teeth({
       </table>
       <p>Retraitements</p>
       {!!file.teeth.length && (
-        <table className={style.teeth}>
-          <tbody>
-            <tr>
-              {file.teeth
-                .sort((a, b) =>
-                  retreatmentOrder.indexOf(a.id) >
-                  retreatmentOrder.indexOf(b.id)
-                    ? 1
-                    : -1,
-                )
-                .map((tooth, i) => (
-                  <td key={i}>
-                    <label className="flex flex-col justify-center items-center">
-                      {tooth.id}
-                      <input
-                        checked={tooth.isRetreatment}
-                        name={`tooth-${tooth.id}`}
-                        onChange={onChangeTreatmentType}
-                        value={tooth.id}
-                        type="checkbox"
-                      />
-                    </label>
-                  </td>
-                ))}
-            </tr>
-          </tbody>
-        </table>
+        <ol className="flex flex-col items-start gap-2">
+          {file.teeth
+            .sort((a, b) =>
+              retreatmentOrder.indexOf(a.id) > retreatmentOrder.indexOf(b.id)
+                ? 1
+                : -1,
+            )
+            .map((tooth, i) => (
+              <li key={i}>
+                <label className="flex flex-row justify-center items-center">
+                  <span className="w-8">{tooth.id}</span>
+                  <Select<TreatmentType>
+                    options={['retreatment', 'treatment', 'advice', 'surgery']}
+                    labels={['Retraitement', 'Traitement', 'Avis', 'Chirurgie']}
+                    defaultValue="retreatment"
+                    onChange={(newValue) => {
+                      onChange({
+                        teeth: file.teeth.map((t, j) => ({
+                          ...t,
+                          treatmentType: i === j ? newValue : t.treatmentType,
+                        })),
+                      })
+                    }}
+                  />
+                </label>
+              </li>
+            ))}
+        </ol>
       )}
     </div>
   )
