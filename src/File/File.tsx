@@ -111,9 +111,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ anteriorMedical: e.target.value })}
-        >
-          {file.anteriorMedical}
-        </textarea>
+          value={file.anteriorMedical}
+        />
       </label>
 
       <label>
@@ -121,9 +120,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ medications: e.target.value })}
-        >
-          {file.medications}
-        </textarea>
+          value={file.medications}
+        />
       </label>
 
       <label>
@@ -131,9 +129,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ allergies: e.target.value })}
-        >
-          {file.allergies}
-        </textarea>
+          value={file.allergies}
+        />
       </label>
 
       <label>
@@ -141,9 +138,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ anamnesis: e.target.value })}
-        >
-          {file.anamnesis}
-        </textarea>
+          value={file.anamnesis}
+        />
       </label>
 
       <hr />
@@ -153,9 +149,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ clinicalExam: e.target.value })}
-        >
-          {file.clinicalExam}
-        </textarea>
+          value={file.clinicalExam}
+        />
       </label>
 
       <TeethTests file={file} onChange={onChange} />
@@ -169,9 +164,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ radioExamRA: e.target.value })}
-        >
-          {file.radioExamRA}
-        </textarea>
+          value={file.radioExamRA}
+        />
       </label>
 
       <label>
@@ -179,9 +173,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ radioExamCBCT: e.target.value })}
-        >
-          {file.radioExamCBCT}
-        </textarea>
+          value={file.radioExamCBCT}
+        />
       </label>
 
       <hr />
@@ -191,9 +184,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ diagnostic: e.target.value })}
-        >
-          {file.diagnostic}
-        </textarea>
+          value={file.diagnostic}
+        />
       </label>
 
       <hr />
@@ -203,9 +195,8 @@ export default function File({
         <textarea
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ treatment: e.target.value })}
-        >
-          {file.treatment}
-        </textarea>
+          value={file.treatment}
+        />
       </label>
       <div
         className="inline-block font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"

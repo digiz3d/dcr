@@ -10,6 +10,8 @@ const lowerTeeth = [
   48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38,
 ]
 
+const retreatmentOrder = [...upperTeeth, ...lowerTeeth.slice().reverse()]
+
 export default function Teeth({
   file,
   onChange,
@@ -34,6 +36,7 @@ export default function Teeth({
               palpationTestV: 'n',
               parodontalProbing: 'physiologique',
               mobility: 0,
+              isRetreatment: false,
             },
           ],
         })
@@ -47,42 +50,89 @@ export default function Teeth({
     [file, onChange],
   )
 
+  const onChangeTreatmentType = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange({
+        teeth: file.teeth.map((t) => ({
+          ...t,
+          isRetreatment:
+            t.id.toString() === e.target.value
+              ? e.target.checked
+              : t.isRetreatment,
+        })),
+      })
+    },
+    [file, onChange],
+  )
+
   return (
-    <table className={style.teeth}>
-      <tbody>
-        <tr>
-          {upperTeeth.map((tooth, i) => (
-            <td key={i}>
-              <label className="flex flex-col justify-center items-center">
-                {tooth}
-                <input
-                  checked={activeTeethIds.includes(tooth)}
-                  name={`tooth-${tooth}`}
-                  value={tooth.toString()}
-                  onChange={onChangeHandler}
-                  type="checkbox"
-                />
-              </label>
-            </td>
-          ))}
-        </tr>
-        <tr>
-          {lowerTeeth.map((tooth, i) => (
-            <td key={i}>
-              <label className="flex flex-col justify-center items-center">
-                {tooth}
-                <input
-                  checked={activeTeethIds.includes(tooth)}
-                  name={`tooth-${tooth}`}
-                  value={tooth.toString()}
-                  onChange={onChangeHandler}
-                  type="checkbox"
-                />
-              </label>
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
+    <div>
+      <table className={style.teeth}>
+        <tbody>
+          <tr>
+            {upperTeeth.map((toothId, i) => (
+              <td key={i}>
+                <label className="flex flex-col justify-center items-center">
+                  {toothId}
+                  <input
+                    checked={activeTeethIds.includes(toothId)}
+                    name={`tooth-${toothId}`}
+                    value={toothId.toString()}
+                    onChange={onChangeHandler}
+                    type="checkbox"
+                  />
+                </label>
+              </td>
+            ))}
+          </tr>
+          <tr>
+            {lowerTeeth.map((toothId, i) => (
+              <td key={i}>
+                <label className="flex flex-col justify-center items-center">
+                  {toothId}
+                  <input
+                    checked={activeTeethIds.includes(toothId)}
+                    name={`tooth-${toothId}`}
+                    value={toothId.toString()}
+                    onChange={onChangeHandler}
+                    type="checkbox"
+                  />
+                </label>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+      <p>Retraitements</p>
+      {!!file.teeth.length && (
+        <table className={style.teeth}>
+          <tbody>
+            <tr>
+              {file.teeth
+                .sort((a, b) =>
+                  retreatmentOrder.indexOf(a.id) >
+                  retreatmentOrder.indexOf(b.id)
+                    ? 1
+                    : -1,
+                )
+                .map((tooth, i) => (
+                  <td key={i}>
+                    <label className="flex flex-col justify-center items-center">
+                      {tooth.id}
+                      <input
+                        checked={tooth.isRetreatment}
+                        name={`tooth-${tooth.id}`}
+                        onChange={onChangeTreatmentType}
+                        value={tooth.id}
+                        type="checkbox"
+                      />
+                    </label>
+                  </td>
+                ))}
+            </tr>
+          </tbody>
+        </table>
+      )}
+    </div>
   )
 }

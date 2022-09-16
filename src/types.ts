@@ -16,6 +16,7 @@ export type MedicalFile = {
      * 41-48
      */
     id: number
+    isRetreatment: boolean
     thermicTest: string // "/" | "positif" | "negatif";
     /**
      * if positive, 1-80
