@@ -247,7 +247,7 @@ export default function TeethTests({
             </td>
             <td>
               <div className="flex">
-                {[0, 1, 2, 3, 4].map((x) => (
+                {[0, 1, 2, 3, 4, 'NE'].map((x) => (
                   <div
                     key={x}
                     className="flex flex-col-reverse cursor-pointer m-1"
@@ -257,9 +257,15 @@ export default function TeethTests({
                       id={`mobility-${x}-${t.id}`}
                       value={x}
                       checked={t.mobility === x}
-                      onChange={(e) =>
-                        onChangeTooth(t.id, 'mobility', Number(e.target.value))
-                      }
+                      onChange={(e) => {
+                        onChangeTooth(
+                          t.id,
+                          'mobility',
+                          e.target.value === 'NE'
+                            ? 'NE'
+                            : (Number(e.target.value) as 0 | 1 | 2 | 3 | 4),
+                        )
+                      }}
                     />
                     <label htmlFor={`mobility-${x}-${t.id}`}>{x}</label>
                   </div>

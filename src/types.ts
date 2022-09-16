@@ -29,7 +29,7 @@ export type MedicalFile = {
     /**
      * 0-4
      */
-    mobility: number
+    mobility: 0 | 1 | 2 | 3 | 4 | 'NE'
   }[]
   anamnesis: string
   clinicalExam: string
