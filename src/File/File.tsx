@@ -71,8 +71,12 @@ export default function File({
         <input
           className="block p-1 border border-gray-500"
           type="date"
-          value={file.birthDate.toISOString().split('T')[0]}
-          onChange={(e) => onChange({ birthDate: new Date(e.target.value) })}
+          defaultValue={file.birthDate.toISOString().split('T')[0]}
+          onChange={(e) => {
+            const validDate = new Date(e.target.value)
+            if (isNaN(validDate.getTime())) return
+            onChange({ birthDate: validDate })
+          }}
         />
       </label>
 
