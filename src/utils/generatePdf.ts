@@ -2,7 +2,7 @@ import { pdf, Document, View, Text, Page, Image } from '@react-pdf/renderer'
 import { save } from '@tauri-apps/api/dialog'
 import { writeBinaryFile } from '@tauri-apps/api/fs'
 import { MedicalFile } from '../types'
-import renderPdf from './Report'
+import Report from './Report'
 
 export async function generatePdf(file: MedicalFile) {
   const path = await save({
@@ -11,7 +11,7 @@ export async function generatePdf(file: MedicalFile) {
     filters: [{ name: 'document.pdf', extensions: ['pdf'] }],
   })
 
-  const doc = await pdf(renderPdf({ file })).toBlob()
+  const doc = await pdf(Report({ file })).toBlob()
 
   await writeBinaryFile(path, await doc.arrayBuffer())
 }
