@@ -15,6 +15,8 @@ const settingsFields: { name: keyof Settings; label: string }[] = [
   { name: 'phoneNumber', label: 'Téléphone' },
   { name: 'email', label: 'Adresse email' },
   { name: 'rpps', label: 'RPPS' },
+  { name: 'where', label: 'Où' },
+  { name: 'when', label: 'Quand' },
 ]
 
 export default function useSettings() {

@@ -52,4 +52,6 @@ export type Settings = {
   phoneNumber: string
   email: string
   rpps: string
+  where: string
+  when: string
 }

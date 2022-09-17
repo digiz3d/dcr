@@ -24,6 +24,9 @@ export default function Settings({
                   onChange={(e) =>
                     upsertSetting({ [field.name]: e.target.value })
                   }
+                  onBlur={(e) =>
+                    upsertSetting({ [field.name]: e.target.value.trim() })
+                  }
                 />
               </label>
             ))}
