@@ -4,8 +4,12 @@ import { useCallback, useState } from 'react'
 import File from './File/File'
 import NoFile from './NoFile/NoFile'
 import type { MedicalFile } from './types'
+import Settings from './Settings'
+import useSettings from './Settings/use-settings'
 
 function App() {
+  const [isSettingsComplete] = useSettings()
+  const [isSettingsOpen, setIsSettingsOpen] = useState(!isSettingsComplete)
   const [medicalFiles, setMedicalFiles] = useState<MedicalFile[]>([])
   const [currentMedicalFileIndex, setCurrentMedicalFileIndex] = useState(0)
 
@@ -24,6 +28,7 @@ function App() {
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
+      {isSettingsOpen && <Settings onClose={() => setIsSettingsOpen(false)} />}
       <div className="w-64 p-2 flex-shrink-0">
         <div className="flex flex-col gap-2 sticky top-2">
           <h1 className="text-lg">Dossiers des patients</h1>

@@ -39,3 +39,17 @@ export type MedicalFile = {
   diagnostic: string
   treatment: string
 }
+
+export type Settings = {
+  doctorName: string
+  doctorate: string
+  diploma1: string
+  diploma2: string
+  master: string
+  medicalCenter: string
+  address1: string
+  address2: string
+  phoneNumber: string
+  email: string
+  rpps: string
+}
