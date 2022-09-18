@@ -10,22 +10,67 @@ import ReactPDF, {
 import useSettings from '../Settings/use-settings'
 
 import { MedicalFile } from '../types'
+import Table from './Table'
+
+const trad: Record<MedicalFile['teeth'][number]['treatmentType'], string> = {
+  treatment: 'traitement',
+  retreatment: 'retraitement',
+  advice: 'avis',
+  surgery: 'chirurgie',
+}
+
+function teethToString(teeth: MedicalFile['teeth']) {
+  //le action de teeth[0], (le action de teeth[1-(n-1)]]) et le action de teeth[n]
+  let res = ''
+  for (let i = 0; i < teeth.length; i++) {
+    if (i != 0) {
+      if (i == teeth.length - 1) res += ' et '
+      else res += ', '
+    }
+    switch (teeth[i].treatmentType) {
+      case 'retreatment':
+      case 'treatment':
+        res +=
+          'le ' +
+          trad[teeth[i].treatmentType] +
+          ' endodontique de ' +
+          teeth[i].id
+        break
+      case 'advice':
+        res += 'un ' + trad[teeth[i].treatmentType] + ' sur ' + teeth[i].id
+        break
+      case 'surgery':
+        res += 'une ' + trad[teeth[i].treatmentType] + ' sur ' + teeth[i].id
+        break
+    }
+  }
+  return res
+}
 
 Font.register({
   family: 'Calibri',
-  src: 'https://raw.githubusercontent.com/jondot/dotfiles/master/.fonts/calibri.ttf',
+  fonts: [
+    {
+      src: 'https://raw.githubusercontent.com/developwithpassion/devtools/master/shared/extra_fonts/ms_fonts/Calibri.ttf',
+    },
+    {
+      src: 'https://raw.githubusercontent.com/developwithpassion/devtools/master/shared/extra_fonts/ms_fonts/Calibri%20Bold.ttf',
+      fontWeight: 'bold',
+    },
+  ],
 })
 
 type Props = { file: MedicalFile }
 
 const styles = StyleSheet.create({
   calibri: { fontFamily: 'Calibri' },
+  bold: { fontWeight: 'bold' },
   page: {
     padding: '1.5cm',
     fontSize: '12pt',
     alignContent: 'stretch',
+    display: 'flex',
   },
-  infoSection: { maxWidth: '5.5cm' },
   infos: { textAlign: 'left' },
   title: { textAlign: 'center', fontSize: '24pt' },
   date: { textAlign: 'right', fontSize: '10pt' },
@@ -37,17 +82,25 @@ const styles = StyleSheet.create({
   margin_xl: { marginBottom: '1cm' },
   margin_xxl: { marginBottom: '1.5cm' },
   border: {
+    display: 'flex',
     alignSelf: 'center',
-    width: '90%',
+    minWidth: '90%',
     borderBottomWidth: '1pt',
     borderBottomColor: 'grey',
   },
-  bold: { fontWeight: 'bold' },
+  border_s: {
+    display: 'flex',
+    alignSelf: 'flex-start',
+    minWidth: '5cm',
+    borderBottomWidth: '1pt',
+    borderBottomColor: 'grey',
+  },
 })
 
 function Text(props: ReactPDF.TextProps) {
   return (
     <OText
+      {...props}
       style={[
         styles.calibri,
         ...(props.style
@@ -57,60 +110,94 @@ function Text(props: ReactPDF.TextProps) {
           : []),
       ]}
       hyphenationCallback={(word) => [word]}
-      {...props}
-    >
-      {props.children}
-    </OText>
+    />
   )
 }
 
 export default function Report({ file }: Props) {
   const [, settings] = useSettings()
+  if (!settings) return null
   return (
     <Document key={Math.random()}>
       <Page size="A4" style={styles.page}>
-        <View style={[styles.infoSection]}>
-          <View style={[styles.infos, styles.margin_s]}>
-            {/* Entete */}
-            <Text>{settings?.doctorName}</Text>
-            <Text>[DOCTORAT]</Text>
-            <Text>[DIPLOME_1]</Text>
-            <Text>[DIPLOME_2]</Text>
-            <Text>[MASTER]</Text>
-          </View>
-          <View style={[styles.border, styles.margin_s]}></View>
-          <View style={[styles.infos, styles.margin_s]}>
-            <Text>[MED_CENTER]</Text>
-            <Text>[ADDRESS_1]</Text>
-            <Text>[ADDRESS_2]</Text>
-          </View>
-          <View style={[styles.border, styles.margin_s]}></View>
-          <View style={[styles.infos, styles.margin_s]}>
-            <Text>Tel : [TEL]</Text>
-            <Text>Mail : [MAIL]</Text>
-          </View>
-          <View style={[styles.border, styles.margin_s]}></View>
-          <View style={[styles.infos, styles.margin_xxl]}>
-            <Text>RPPS : [RPPS]</Text>
-          </View>
+        <View style={[styles.infos, styles.margin_s]}>
+          {/* Entete */}
+          <Text style={styles.bold}>{settings.doctorName}</Text>
+          <Text>{settings.doctorate}</Text>
+          <Text>{settings.diploma1}</Text>
+          <Text>{settings.diploma2}</Text>
+          <Text>{settings.master}</Text>
         </View>
+        <View style={[styles.border_s, styles.margin_s]}></View>
+        <View style={[styles.infos, styles.margin_s]}>
+          <Text style={styles.bold}>{settings.medicalCenter}</Text>
+          <Text>{settings.address1}</Text>
+          <Text>{settings.address2}</Text>
+        </View>
+        <View style={[styles.border_s, styles.margin_s]}></View>
+        <View
+          style={[
+            styles.infos,
+            {
+              display: 'flex',
+              flexDirection: 'row',
+            },
+          ]}
+        >
+          <Text style={styles.bold}>Tel : </Text>
+          <Text>{settings.phoneNumber}</Text>
+        </View>
+        <View
+          style={[
+            styles.infos,
+            styles.margin_s,
+            {
+              display: 'flex',
+              flexDirection: 'row',
+            },
+          ]}
+        >
+          <Text style={styles.bold}>Mail : </Text>
+          <Text>{settings.email}</Text>
+        </View>
+        <View style={[styles.border_s, styles.margin_s]}></View>
+        <View
+          style={[
+            styles.infos,
+            styles.margin_xxl,
+            {
+              display: 'flex',
+              flexDirection: 'row',
+            },
+          ]}
+        >
+          <Text style={styles.bold}>RPPS : </Text>
+          <Text>{settings.rpps}</Text>
+        </View>
+
         {/* Title */}
-        <View style={[styles.title, styles.margin_xl]}>
+        <View style={[styles.title, styles.margin_xl, styles.bold]}>
           <Text>Compte rendu de consultation</Text>
         </View>
 
         {/* place + date */}
         <View style={[styles.date, styles.margin_xxl]}>
-          <Text>À [WHERE], le [DATE]</Text>
+          <Text>
+            À {settings.where}, le {settings.when}
+          </Text>
         </View>
 
         {/* Intro */}
         <View>
           <Text style={styles.margin_s}>Cher confrère, Chère consœur,</Text>
           <Text style={styles.margin_l}>
-            J'ai reçu votre [patient/patiente] [MONSIEUR/MADAME] [NOM] [PRENOM],
-            [né/née] le [BIRTHDAY], pour le [TOOTH_ACTION] de [TOOTH_ID]([,/et]
-            [le [TOOTH_ACTION] de] [OTHER_TEETH])
+            {`J'ai reçu votre ${
+              file.gender == 'm' ? 'patient, Monsieur' : 'patiente, Madame'
+            } ${file.patientLastName} ${file.patientFirstName}, ${
+              file.gender == 'm' ? 'né' : 'née'
+            } le ${file.birthDate.toLocaleDateString()}, pour ${teethToString(
+              file.teeth,
+            )}.`}
           </Text>
         </View>
 
@@ -119,51 +206,55 @@ export default function Report({ file }: Props) {
         {/* Anamnèse */}
         <View style={styles.margin_l}>
           <Text style={[styles.margin_s, styles.bold]}>Anamnèse</Text>
-          <Text>Antécédents médicaux : [MEDICAL_ANTECEDENTS]</Text>
-          <Text>Médicaments : [MEDICATION]</Text>
-          <Text style={styles.margin_s}>Allergie : [ALLERGIES]</Text>
-          <Text>[DENTAL_HISTORY]</Text>
+          <Text>Antécédents médicaux : {file.anteriorMedical}</Text>
+          <Text>Médicaments : {file.medications}</Text>
+          <Text style={styles.margin_s}>Allergie : {file.allergies}</Text>
+          <Text>{file.anamnesis}</Text>
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Examen clinique */}
         <View style={styles.margin_l}>
-          <Text style={styles.margin_s}>Examen clinique</Text>
-          <Text>[CLINICAL EXAM]</Text>
-          <Text>[INSERT TEETH TABLE]</Text>
+          <Text style={[styles.margin_s, styles.bold]}>Examen clinique</Text>
+          <Text>{file.clinicalExam}</Text>
+          <Table teeth={file.teeth}></Table>
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Examen radiologique */}
         <View style={styles.margin_l}>
-          <Text style={styles.margin_s}>Examen radiologique</Text>
+          <Text style={[styles.margin_s, styles.bold]}>
+            Examen radiologique
+          </Text>
           {file.photo && <Image source={file.photo} />}
-          <Text>[RADIO_EXAM_RA]</Text>
-          <Text>(if !null)[RADIO_EXAM_CBCT]</Text>
+          <Text>{file.radioExamRA}</Text>
+          {file.radioExamCBCT && <Text>{file.radioExamCBCT}</Text>}
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Diagnostic */}
         <View style={styles.margin_l}>
-          <Text style={styles.margin_s}>Diagnostic</Text>
-          <Text>[DIAGNOSTIC]</Text>
+          <Text style={[styles.margin_s, styles.bold]}>Diagnostic</Text>
+          <Text>{file.diagnostic}</Text>
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Attitude thérapeutique */}
         <View style={styles.margin_xxl}>
-          <Text style={styles.margin_s}>Attitude thérapeutique</Text>
-          <Text>[treatment]</Text>
+          <Text style={[styles.margin_s, styles.bold]}>
+            Attitude thérapeutique
+          </Text>
+          <Text>{file.treatment}</Text>
         </View>
 
         {/* Signature */}
         <View style={styles.sign}>
           <Text style={styles.margin_s}>Confraternellement,</Text>
-          <Text>[DRNAME]</Text>
+          <Text>{settings.doctorName}</Text>
         </View>
       </Page>
     </Document>
