@@ -1,83 +1,151 @@
-import { Document, Image, Page, Text, View } from '@react-pdf/renderer'
+import ReactPDF, {
+  Document,
+  Font,
+  Image,
+  Page,
+  StyleSheet,
+  Text as OText,
+  View,
+} from '@react-pdf/renderer'
 import { MedicalFile } from '../types'
 
 type Props = { file: MedicalFile }
 
+function Text(props: ReactPDF.TextProps) {
+  return (
+    <OText hyphenationCallback={(word) => [word]} {...props}>
+      {props.children}
+    </OText>
+  )
+}
+const styles = StyleSheet.create({
+  page: {
+    padding: '1.5cm',
+    fontSize: '12pt',
+    alignContent: 'stretch',
+  },
+
+  infoSection: { maxWidth: '5.5cm' },
+  infos: { textAlign: 'left' },
+  title: { textAlign: 'center', fontSize: '24pt' },
+  date: { textAlign: 'right', fontSize: '10pt' },
+  sign: { textAlign: 'right', fontSize: '10pt' },
+
+  margin_s: { marginBottom: '0.2cm' },
+  margin_m: { marginBottom: '0.4cm' },
+  margin_l: { marginBottom: '0.8cm' },
+  margin_xl: { marginBottom: '1cm' },
+  margin_xxl: { marginBottom: '1.5cm' },
+
+  border: {
+    alignSelf: 'center',
+    width: '90%',
+    borderBottomWidth: '1pt',
+    borderBottomColor: 'grey',
+  },
+
+  bold: { fontWeight: 'bold' },
+})
+
 export default function Report({ file }: Props) {
   return (
-    <Document>
-      <Page size="A4">
-        <View>
-          {/* Entete */}
-          <Text>[DRNAME]</Text>
-          <Text>[DOCTORAT]</Text>
-          <Text>[DIPLOME_1]</Text>
-          <Text>[DIPLOME_2]</Text>
-          <Text>[MASTER]</Text>
+    <Document key={Math.random()}>
+      <Page size="A4" style={styles.page}>
+        <View style={[styles.infoSection]}>
+          <View style={[styles.infos, styles.margin_s]}>
+            {/* Entete */}
+            <Text>[DRNAME]</Text>
+            <Text>[DOCTORAT]</Text>
+            <Text>[DIPLOME_1]</Text>
+            <Text>[DIPLOME_2]</Text>
+            <Text>[MASTER]</Text>
+          </View>
+          <View style={[styles.border, styles.margin_s]}></View>
+          <View style={[styles.infos, styles.margin_s]}>
+            <Text>[MED_CENTER]</Text>
+            <Text>[ADDRESS_1]</Text>
+            <Text>[ADDRESS_2]</Text>
+          </View>
+          <View style={[styles.border, styles.margin_s]}></View>
+          <View style={[styles.infos, styles.margin_s]}>
+            <Text>Tel : [TEL]</Text>
+            <Text>Mail : [MAIL]</Text>
+          </View>
+          <View style={[styles.border, styles.margin_s]}></View>
+          <View style={[styles.infos, styles.margin_xxl]}>
+            <Text>RPPS : [RPPS]</Text>
+          </View>
         </View>
-        <View>
-          <Text>[MED_CENTER]</Text>
-          <Text>[ADDRESS_1]</Text>
-          <Text>[ADDRESS_2]</Text>
-        </View>
-        <View>
-          <Text>Tel : [TEL]</Text>
-          <Text>Mail : [MAIL]</Text>
-        </View>
-        <View>
-          <Text>RPPS : [RPPS]</Text>
-        </View>
-
         {/* Title */}
-        <View>
+        <View style={[styles.title, styles.margin_xl]}>
           <Text>Compte rendu de consultation</Text>
         </View>
 
         {/* place + date */}
-        <View>
-          <Text>À [WHERE] le [DATE]</Text>
-        </View>
-        
-        {/* Intro */}
-        <View>
-          <Text>Cher confrère, Chère consœur</Text>
-          <Text>J'ai reçu votre [patient/patiente] [MONSIEUR/MADAME] [NOM] [PRENOM], [né/née] le [BIRTHDAY], pour le [re]traitement endodontique de [TOOTH_ID]([,/et] [le [re]traitement de] [OTHER_TEETH])</Text>
+        <View style={[styles.date, styles.margin_xxl]}>
+          <Text>À [WHERE], le [DATE]</Text>
         </View>
 
-        {/* Anamnèse */}
+        {/* Intro */}
         <View>
-          <Text>Anamnèse</Text>
+          <Text style={styles.margin_s}>Cher confrère, Chère consœur,</Text>
+          <Text style={styles.margin_l}>
+            J'ai reçu votre [patient/patiente] [MONSIEUR/MADAME] [NOM] [PRENOM],
+            [né/née] le [BIRTHDAY], pour le [TOOTH_ACTION] de [TOOTH_ID]([,/et]
+            [le [TOOTH_ACTION] de] [OTHER_TEETH])
+          </Text>
+        </View>
+
+        <View style={[styles.border, styles.margin_l]}></View>
+
+        {/* Anamnèse */}
+        <View style={styles.margin_l}>
+          <Text style={[styles.margin_s, styles.bold]}>Anamnèse</Text>
           <Text>Antécédents médicaux : [MEDICAL_ANTECEDENTS]</Text>
           <Text>Médicaments : [MEDICATION]</Text>
-          <Text>Allergie : [ALLERGIES]</Text>
+          <Text style={styles.margin_s}>Allergie : [ALLERGIES]</Text>
           <Text>[DENTAL_HISTORY]</Text>
         </View>
-        
+
+        <View style={[styles.border, styles.margin_l]}></View>
+
         {/* Examen clinique */}
-        <View>
-          <Text>Examen clinique</Text>
+        <View style={styles.margin_l}>
+          <Text style={styles.margin_s}>Examen clinique</Text>
           <Text>[CLINICAL EXAM]</Text>
           <Text>[INSERT TEETH TABLE]</Text>
         </View>
 
+        <View style={[styles.border, styles.margin_l]}></View>
+
         {/* Examen radiologique */}
-        <View>
-          <Text>Examen radiologique</Text>
+        <View style={styles.margin_l}>
+          <Text style={styles.margin_s}>Examen radiologique</Text>
           {file.photo && <Image source={file.photo} />}
           <Text>[RADIO_EXAM_RA]</Text>
           <Text>(if !null)[RADIO_EXAM_CBCT]</Text>
         </View>
 
+        <View style={[styles.border, styles.margin_l]}></View>
+
         {/* Diagnostic */}
-        <View>
-          <Text>Diagnostic</Text>
+        <View style={styles.margin_l}>
+          <Text style={styles.margin_s}>Diagnostic</Text>
           <Text>[DIAGNOSTIC]</Text>
         </View>
-        
+
+        <View style={[styles.border, styles.margin_l]}></View>
+
         {/* Attitude thérapeutique */}
-        <View>
-          <Text>Attitude thérapeutique</Text>
+        <View style={styles.margin_xxl}>
+          <Text style={styles.margin_s}>Attitude thérapeutique</Text>
           <Text>[treatment]</Text>
+        </View>
+
+        {/* Signature */}
+        <View style={styles.sign}>
+          <Text style={styles.margin_s}>Confraternellement,</Text>
+          <Text>[DRNAME]</Text>
         </View>
       </Page>
     </Document>
