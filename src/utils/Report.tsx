@@ -7,24 +7,24 @@ import ReactPDF, {
   Text as OText,
   View,
 } from '@react-pdf/renderer'
+import useSettings from '../Settings/use-settings'
+
 import { MedicalFile } from '../types'
+
+Font.register({
+  family: 'Calibri',
+  src: 'https://raw.githubusercontent.com/jondot/dotfiles/master/.fonts/calibri.ttf',
+})
 
 type Props = { file: MedicalFile }
 
-function Text(props: ReactPDF.TextProps) {
-  return (
-    <OText hyphenationCallback={(word) => [word]} {...props}>
-      {props.children}
-    </OText>
-  )
-}
 const styles = StyleSheet.create({
+  calibri: { fontFamily: 'Calibri' },
   page: {
     padding: '1.5cm',
     fontSize: '12pt',
     alignContent: 'stretch',
   },
-
   infoSection: { maxWidth: '5.5cm' },
   infos: { textAlign: 'left' },
   title: { textAlign: 'center', fontSize: '24pt' },
@@ -36,25 +36,43 @@ const styles = StyleSheet.create({
   margin_l: { marginBottom: '0.8cm' },
   margin_xl: { marginBottom: '1cm' },
   margin_xxl: { marginBottom: '1.5cm' },
-
   border: {
     alignSelf: 'center',
     width: '90%',
     borderBottomWidth: '1pt',
     borderBottomColor: 'grey',
   },
-
   bold: { fontWeight: 'bold' },
 })
 
+function Text(props: ReactPDF.TextProps) {
+  return (
+    <OText
+      style={[
+        styles.calibri,
+        ...(props.style
+          ? Array.isArray(props.style)
+            ? props.style
+            : [props.style]
+          : []),
+      ]}
+      hyphenationCallback={(word) => [word]}
+      {...props}
+    >
+      {props.children}
+    </OText>
+  )
+}
+
 export default function Report({ file }: Props) {
+  const [, settings] = useSettings()
   return (
     <Document key={Math.random()}>
       <Page size="A4" style={styles.page}>
         <View style={[styles.infoSection]}>
           <View style={[styles.infos, styles.margin_s]}>
             {/* Entete */}
-            <Text>[DRNAME]</Text>
+            <Text>{settings?.doctorName}</Text>
             <Text>[DOCTORAT]</Text>
             <Text>[DIPLOME_1]</Text>
             <Text>[DIPLOME_2]</Text>
