@@ -1,4 +1,5 @@
 import { PDFViewer } from '@react-pdf/renderer'
+import useSettings from '../Settings/use-settings'
 import type { MedicalFile } from '../types'
 import Report from '../utils/Report'
 import Photo from './Photo'
@@ -13,6 +14,7 @@ export default function File({
   file: MedicalFile
   onChange: (file: Partial<MedicalFile>) => void
 }) {
+  const [, settings] = useSettings()
   return (
     <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full rounded-md">
       <label>
@@ -201,15 +203,16 @@ export default function File({
       <div
         className="inline-block font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
+          if (!settings) return alert('nooo')
           const { generatePdf } = await import('../utils/generatePdf')
-          await generatePdf(file)
+          await generatePdf(file, settings)
         }}
       >
         Sauvegarder PDF
       </div>
-      {process.env.NODE_ENV !== 'production' && (
+      {process.env.NODE_ENV !== 'production' && settings && (
         <PDFViewer className="h-[1000px]">
-          <Report file={file} />
+          <Report file={file} settings={settings} />
         </PDFViewer>
       )}
     </div>

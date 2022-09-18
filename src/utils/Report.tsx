@@ -1,16 +1,9 @@
-import ReactPDF, {
-  Document,
-  Font,
-  Image,
-  Page,
-  StyleSheet,
-  Text as OText,
-  View,
-} from '@react-pdf/renderer'
+import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
 import useSettings from '../Settings/use-settings'
 
-import { MedicalFile } from '../types'
+import { MedicalFile, Settings } from '../types'
 import Table from './Table'
+import Text from './Text'
 
 const trad: Record<MedicalFile['teeth'][number]['treatmentType'], string> = {
   treatment: 'traitement',
@@ -47,23 +40,9 @@ function teethToString(teeth: MedicalFile['teeth']) {
   return res
 }
 
-Font.register({
-  family: 'Calibri',
-  fonts: [
-    {
-      src: 'https://raw.githubusercontent.com/developwithpassion/devtools/master/shared/extra_fonts/ms_fonts/Calibri.ttf',
-    },
-    {
-      src: 'https://raw.githubusercontent.com/developwithpassion/devtools/master/shared/extra_fonts/ms_fonts/Calibri%20Bold.ttf',
-      fontWeight: 'bold',
-    },
-  ],
-})
-
-type Props = { file: MedicalFile }
+type Props = { file: MedicalFile; settings: Settings }
 
 const styles = StyleSheet.create({
-  calibri: { fontFamily: 'Calibri' },
   bold: { fontWeight: 'bold' },
   page: {
     padding: '1.5cm',
@@ -97,28 +76,9 @@ const styles = StyleSheet.create({
   },
 })
 
-function Text(props: ReactPDF.TextProps) {
+export default function Report({ file, settings }: Props) {
   return (
-    <OText
-      {...props}
-      style={[
-        styles.calibri,
-        ...(props.style
-          ? Array.isArray(props.style)
-            ? props.style
-            : [props.style]
-          : []),
-      ]}
-      hyphenationCallback={(word) => [word]}
-    />
-  )
-}
-
-export default function Report({ file }: Props) {
-  const [, settings] = useSettings()
-  if (!settings) return null
-  return (
-    <Document key={Math.random()}>
+    <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.infos, styles.margin_s]}>
           {/* Entete */}

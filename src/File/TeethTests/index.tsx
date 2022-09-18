@@ -1,4 +1,4 @@
-import type { MedicalFile } from '../../types'
+import type { MedicalFile, Tooth } from '../../types'
 
 import style from './index.module.scss'
 
@@ -43,36 +43,34 @@ export default function TeethTests({
               <div className={style.radioList}>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`thermic-test-slash-${t.id}`}
-                    value="/"
                     checked={t.thermicTest === '/'}
-                    onChange={(e) =>
-                      onChangeTooth(t.id, 'thermicTest', e.target.value)
-                    }
+                    onChange={(e) => onChangeTooth(t.id, 'thermicTest', '/')}
                   />
                   <label htmlFor={`thermic-test-slash-${t.id}`}>/</label>
                 </div>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`thermic-test-n-${t.id}`}
-                    value="n"
-                    checked={t.thermicTest === 'n'}
+                    checked={t.thermicTest === 'negative'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'thermicTest', e.target.value)
+                      onChangeTooth(t.id, 'thermicTest', 'negative')
                     }
                   />
                   <label htmlFor={`thermic-test-n-${t.id}`}>Neg</label>
                 </div>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`thermic-test-p-${t.id}`}
-                    value="p"
-                    checked={t.thermicTest === 'p'}
+                    checked={t.thermicTest === 'positive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'thermicTest', e.target.value)
+                      onChangeTooth(t.id, 'thermicTest', 'positive')
                     }
                   />
                   <label htmlFor={`thermic-test-p-${t.id}`}>Pos</label>
@@ -83,43 +81,49 @@ export default function TeethTests({
               <div className={style.radioList}>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`eletric-test-slash-${t.id}`}
-                    value="/"
                     checked={t.electricTest === '/'}
-                    onChange={(e) =>
-                      onChangeTooth(t.id, 'electricTest', e.target.value)
-                    }
+                    onChange={(e) => onChangeTooth(t.id, 'electricTest', '/')}
                   />
                   <label htmlFor={`eletric-test-slash-${t.id}`}>/</label>
-                </div>{' '}
+                </div>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`eletric-test-n-${t.id}`}
-                    value="n"
-                    checked={t.electricTest === 'n'}
+                    checked={t.electricTest === 'negative'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'electricTest', e.target.value)
+                      onChangeTooth(t.id, 'electricTest', 'negative')
                     }
                   />
                   <label htmlFor={`eletric-test-n-${t.id}`}>Neg</label>
                 </div>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
-                    defaultValue={''}
-                    checked={t.electricTest !== '/' && t.electricTest !== 'n'}
-                    onChange={(e) =>
-                      onChangeTooth(t.id, 'electricTest', e.target.value)
+                    checked={
+                      t.electricTest !== '/' && t.electricTest !== 'negative'
                     }
+                    onChange={(e) => onChangeTooth(t.id, 'electricTest', 0)}
                   />
                   <input
-                    className="inline border border-gray-500 p-2"
-                    disabled={t.electricTest === '/' || t.electricTest === 'n'}
-                    type="text"
+                    className="inline border border-gray-500 px-2 w-14"
+                    disabled={
+                      t.electricTest === '/' || t.electricTest === 'negative'
+                    }
+                    min={0}
+                    max={80}
+                    type="number"
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'electricTest', e.target.value)
+                      onChangeTooth(
+                        t.id,
+                        'electricTest',
+                        Number(e.target.value),
+                      )
                     }
                   />
                 </div>
@@ -129,36 +133,36 @@ export default function TeethTests({
               <div className={style.radioList}>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`percution-test-n-${t.id}`}
-                    value="n"
-                    checked={t.percutionTest === 'n'}
+                    checked={t.percutionTest === 'negative'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'percutionTest', e.target.value)
+                      onChangeTooth(t.id, 'percutionTest', 'negative')
                     }
                   />
                   <label htmlFor={`percution-test-n-${t.id}`}>Negatif</label>
-                </div>{' '}
+                </div>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`percution-test-s-${t.id}`}
-                    value="s"
-                    checked={t.percutionTest === 's'}
+                    checked={t.percutionTest === 'sensitive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'percutionTest', e.target.value)
+                      onChangeTooth(t.id, 'percutionTest', 'sensitive')
                     }
                   />
                   <label htmlFor={`percution-test-s-${t.id}`}>Sensible</label>
                 </div>
                 <div className={style.item}>
                   <input
+                    className="mr-2"
                     type="radio"
                     id={`percution-test-p-${t.id}`}
-                    value="p"
-                    checked={t.percutionTest === 'p'}
+                    checked={t.percutionTest === 'positive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'percutionTest', e.target.value)
+                      onChangeTooth(t.id, 'percutionTest', 'positive')
                     }
                   />
                   <label htmlFor={`percution-test-p-${t.id}`}>Positif</label>
@@ -166,7 +170,7 @@ export default function TeethTests({
               </div>
             </td>
             <td>
-              <div className="grid gap-2 m-2 grid-cols-[repeat(4,15px)]">
+              <div className="grid gap-2 m-2 grid-cols-[repeat(4,15px)] justify-center">
                 <div></div>
                 <div>N</div>
                 <div>S</div>
@@ -175,30 +179,30 @@ export default function TeethTests({
                 <div>
                   <input
                     type="radio"
-                    value="n"
-                    checked={t.palpationTestV === 'n'}
+                    value="negative"
+                    checked={t.palpationTestV === 'negative'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'palpationTestV', e.target.value)
+                      onChangeTooth(t.id, 'palpationTestV', 'negative')
                     }
                   />
                 </div>
                 <div>
                   <input
                     type="radio"
-                    value="s"
-                    checked={t.palpationTestV === 's'}
+                    value="sensitive"
+                    checked={t.palpationTestV === 'sensitive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'palpationTestV', e.target.value)
+                      onChangeTooth(t.id, 'palpationTestV', 'sensitive')
                     }
                   />
                 </div>
                 <div>
                   <input
                     type="radio"
-                    value="p"
-                    checked={t.palpationTestV === 'p'}
+                    value="positive"
+                    checked={t.palpationTestV === 'positive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'palpationTestV', e.target.value)
+                      onChangeTooth(t.id, 'palpationTestV', 'positive')
                     }
                   />
                 </div>
@@ -206,30 +210,27 @@ export default function TeethTests({
                 <div>
                   <input
                     type="radio"
-                    value="n"
-                    checked={t.palpationTestL === 'n'}
+                    checked={t.palpationTestL === 'negative'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'palpationTestL', e.target.value)
+                      onChangeTooth(t.id, 'palpationTestL', 'negative')
                     }
                   />
                 </div>
                 <div>
                   <input
                     type="radio"
-                    value="s"
-                    checked={t.palpationTestL === 's'}
+                    checked={t.palpationTestL === 'sensitive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'palpationTestL', e.target.value)
+                      onChangeTooth(t.id, 'palpationTestL', 'sensitive')
                     }
                   />
                 </div>
                 <div>
                   <input
                     type="radio"
-                    value="p"
-                    checked={t.palpationTestL === 'p'}
+                    checked={t.palpationTestL === 'positive'}
                     onChange={(e) =>
-                      onChangeTooth(t.id, 'palpationTestL', e.target.value)
+                      onChangeTooth(t.id, 'palpationTestL', 'positive')
                     }
                   />
                 </div>
@@ -239,14 +240,14 @@ export default function TeethTests({
               <input
                 className="inline border border-gray-500 p-2"
                 type="text"
-                defaultValue={'Physiologique'}
+                value={t.parodontalProbing}
                 onChange={(e) =>
                   onChangeTooth(t.id, 'parodontalProbing', e.target.value)
                 }
               />
             </td>
             <td>
-              <div className="flex">
+              <div className="flex justify-center">
                 {[0, 1, 2, 3, 4, 'NE'].map((x) => (
                   <div
                     key={x}
