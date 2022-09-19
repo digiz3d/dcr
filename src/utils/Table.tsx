@@ -26,7 +26,7 @@ const style = StyleSheet.create({
 })
 
 function Row(props: PropsWithChildren) {
-  return <View style={style.row} {...props} />
+  return <View wrap={false} style={style.row} {...props} />
 }
 
 export default function Table({ teeth }: Props) {

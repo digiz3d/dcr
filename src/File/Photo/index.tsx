@@ -40,6 +40,7 @@ export default function Photo({
           const imageBlob = await readBinaryFile(imagePath)
           onChange({
             photo: [
+              ...(file.photo ? file.photo : []),
               URL.createObjectURL(
                 new Blob([imageBlob.buffer], { type: 'image/png' }),
               ),

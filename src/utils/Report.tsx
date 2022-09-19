@@ -62,7 +62,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  image: { maxWidth: '45%', margin: '1px' },
+  image: {
+    width: '8.5cm',
+    height: 'auto',
+    objectFit: 'contain',
+    marginBottom: '3px',
+  },
 
   margin_s: { marginBottom: '0.2cm' },
   margin_m: { marginBottom: '0.4cm' },
@@ -157,7 +162,7 @@ export default function Report({ file, settings }: Props) {
         </View>
 
         {/* Intro */}
-        <View>
+        <View wrap={false}>
           <Text style={styles.margin_s}>Cher confrère, Chère consœur,</Text>
           <Text style={styles.margin_l}>
             {`J'ai reçu votre ${
@@ -173,7 +178,7 @@ export default function Report({ file, settings }: Props) {
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Anamnèse */}
-        <View style={styles.margin_l}>
+        <View style={styles.margin_l} wrap={false}>
           <Text style={[styles.margin_s, styles.bold]}>Anamnèse</Text>
           <Text>Antécédents médicaux : {file.anteriorMedical}</Text>
           <Text>Médicaments : {file.medications}</Text>
@@ -186,7 +191,7 @@ export default function Report({ file, settings }: Props) {
         {/* Examen clinique */}
         <View style={styles.margin_l}>
           <Text style={[styles.margin_s, styles.bold]}>Examen clinique</Text>
-          <Text>{file.clinicalExam}</Text>
+          <Text style={[styles.margin_s]}>{file.clinicalExam}</Text>
           <Table teeth={file.teeth}></Table>
         </View>
 
@@ -198,18 +203,10 @@ export default function Report({ file, settings }: Props) {
             Examen radiologique
           </Text>
           <View style={[styles.margin_m, styles.image_container]}>
-            {file.photo && (
-              <Image key="i1" style={styles.image} source={file.photo[0]} />
-            )}
-            {file.photo && (
-              <Image key="i2" style={styles.image} source={file.photo[1]} />
-            )}
-            {file.photo && (
-              <Image key="i3" style={styles.image} source={file.photo[2]} />
-            )}
-            {file.photo && (
-              <Image key="i4" style={styles.image} source={file.photo[3]} />
-            )}
+            {file.photo &&
+              file.photo.map((src) => (
+                <Image key={src} style={styles.image} source={src} />
+              ))}
           </View>
           <Text style={styles.margin_s}>{file.radioExamRA}</Text>
           {file.radioExamCBCT && (
@@ -220,7 +217,7 @@ export default function Report({ file, settings }: Props) {
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Diagnostic */}
-        <View style={styles.margin_l}>
+        <View style={styles.margin_l} wrap={false}>
           <Text style={[styles.margin_s, styles.bold]}>Diagnostic</Text>
           <Text>{file.diagnostic}</Text>
         </View>
@@ -228,7 +225,7 @@ export default function Report({ file, settings }: Props) {
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Attitude thérapeutique */}
-        <View style={styles.margin_xxl}>
+        <View style={styles.margin_xxl} wrap={false}>
           <Text style={[styles.margin_s, styles.bold]}>
             Attitude thérapeutique
           </Text>
