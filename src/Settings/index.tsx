@@ -10,7 +10,7 @@ export default function Settings({
 
   return ReactDOM.createPortal(
     <div className="h-screen w-screen backdrop-blur bg-black bg-opacity-30 flex justify-center items-center">
-      <div className="bg-white p-8 w-2/4 h-3/4 rounded-lg shadow-xl overflow-y-scroll">
+      <div className="bg-white p-8 w-2/4 h-3/4 rounded-lg shadow-xl overflow-y-auto">
         <div>
           <h1 className="text-xl mb-4">Paramètres</h1>
           <div className="flex flex-col gap-2">

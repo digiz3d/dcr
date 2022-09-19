@@ -28,10 +28,10 @@ function App() {
   )
 
   return (
-    <div className="flex bg-gray-100 h-screen overflow-hidden">
+    <div className="flex bg-gray-100 h-screen overflow">
       {isSettingsOpen && <Settings onClose={() => setIsSettingsOpen(false)} />}
       <div className="w-64 h-screen flex flex-col">
-        <div className="flex flex-1 flex-col gap-2 h-screen overflow-x-scroll p-2">
+        <div className="flex flex-1 flex-col gap-2 h-screen overflow-y-auto p-2">
           <h1 className="text-lg">Dossiers des patients</h1>
           {medicalFiles.map((f, i) => (
             <button
@@ -82,7 +82,7 @@ function App() {
           setMedicalFiles={setMedicalFiles}
         />
       </div>
-      <div className="flex flex-1 h-screen overflow-x-scroll">
+      <div className="flex flex-1 h-screen overflow-y-auto">
         {medicalFiles[currentMedicalFileIndex] ? (
           <File
             key={currentMedicalFileIndex}
