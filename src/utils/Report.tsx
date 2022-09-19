@@ -55,6 +55,15 @@ const styles = StyleSheet.create({
   date: { textAlign: 'right', fontSize: '10pt' },
   sign: { textAlign: 'right', fontSize: '10pt' },
 
+  image_container: {
+    alignContent: 'flex-start',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  image: { maxWidth: '45%', margin: '1px' },
+
   margin_s: { marginBottom: '0.2cm' },
   margin_m: { marginBottom: '0.4cm' },
   margin_l: { marginBottom: '0.8cm' },
@@ -188,9 +197,24 @@ export default function Report({ file, settings }: Props) {
           <Text style={[styles.margin_s, styles.bold]}>
             Examen radiologique
           </Text>
-          {file.photo && <Image source={file.photo} />}
-          <Text>{file.radioExamRA}</Text>
-          {file.radioExamCBCT && <Text>{file.radioExamCBCT}</Text>}
+          <View style={[styles.margin_m, styles.image_container]}>
+            {file.photo && (
+              <Image key="i1" style={styles.image} source={file.photo[0]} />
+            )}
+            {file.photo && (
+              <Image key="i2" style={styles.image} source={file.photo[1]} />
+            )}
+            {file.photo && (
+              <Image key="i3" style={styles.image} source={file.photo[2]} />
+            )}
+            {file.photo && (
+              <Image key="i4" style={styles.image} source={file.photo[3]} />
+            )}
+          </View>
+          <Text style={styles.margin_s}>{file.radioExamRA}</Text>
+          {file.radioExamCBCT && (
+            <Text style={styles.margin_s}>{file.radioExamCBCT}</Text>
+          )}
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>

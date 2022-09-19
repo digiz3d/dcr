@@ -14,7 +14,15 @@ export default function Photo({
     <div className="flex flex-col">
       <div>
         <div>
-          {file.photo && <img className="max-w-md max-h-64" src={file.photo} />}
+          {file.photo && (
+            <img className="max-w-md max-h-64" src={file.photo[0]} />
+          )}
+          {file.photo && (
+            <img className="max-w-md max-h-64" src={file.photo[1]} />
+          )}
+          {file.photo && (
+            <img className="max-w-md max-h-64" src={file.photo[2]} />
+          )}
         </div>
         <div
           onClick={(e) => {
@@ -31,9 +39,11 @@ export default function Photo({
           if (Array.isArray(imagePath)) return
           const imageBlob = await readBinaryFile(imagePath)
           onChange({
-            photo: URL.createObjectURL(
-              new Blob([imageBlob.buffer], { type: 'image/png' }),
-            ),
+            photo: [
+              URL.createObjectURL(
+                new Blob([imageBlob.buffer], { type: 'image/png' }),
+              ),
+            ],
           })
         }}
       >
