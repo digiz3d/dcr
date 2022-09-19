@@ -6,6 +6,7 @@ import NoFile from './NoFile/NoFile'
 import type { MedicalFile } from './types'
 import Settings from './Settings'
 import useSettings from './Settings/use-settings'
+import Menu from './Menu'
 
 function App() {
   const [isSettingsComplete] = useSettings()
@@ -27,10 +28,10 @@ function App() {
   )
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex bg-gray-100 h-screen overflow-hidden">
       {isSettingsOpen && <Settings onClose={() => setIsSettingsOpen(false)} />}
-      <div className="w-64 p-2 flex-shrink-0">
-        <div className="flex flex-col gap-2 sticky top-2">
+      <div className="w-64 h-screen flex flex-col">
+        <div className="flex flex-1 flex-col gap-2 h-screen overflow-x-scroll p-2">
           <h1 className="text-lg">Dossiers des patients</h1>
           {medicalFiles.map((f, i) => (
             <button
@@ -46,7 +47,7 @@ function App() {
             </button>
           ))}
           <button
-            className="p-2 text-center rounded-md bg-white hover:bg-indigo-100"
+            className="p-2 text-center rounded-md bg-red hover:bg-indigo-100"
             onClick={() => {
               setMedicalFiles((c) => [
                 ...c,
@@ -75,10 +76,16 @@ function App() {
             +
           </button>
         </div>
+        <Menu
+          openSettings={() => setIsSettingsOpen(true)}
+          medicalFiles={medicalFiles}
+          setMedicalFiles={setMedicalFiles}
+        />
       </div>
-      <div className="flex flex-1">
+      <div className="flex flex-1 h-screen overflow-x-scroll">
         {medicalFiles[currentMedicalFileIndex] ? (
           <File
+            key={currentMedicalFileIndex}
             file={medicalFiles[currentMedicalFileIndex]}
             onChange={onChange}
           />

@@ -16,7 +16,7 @@ export default function File({
 }) {
   const [, settings] = useSettings()
   return (
-    <div className="flex flex-col gap-4 p-2 bg-white m-2 ml-0 w-full rounded-md">
+    <div className="flex flex-col gap-4 p-2 bg-white h-max m-2 ml-0 w-full rounded-md">
       <label>
         Dentiste
         <input
