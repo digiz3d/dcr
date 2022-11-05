@@ -48,7 +48,9 @@ export default function Menu({
 
             if (!path || Array.isArray(path)) return
 
-            const files = JSON.parse(await readTextFile(path)).map((x) => ({
+            const files: MedicalFile[] = JSON.parse(
+              await readTextFile(path),
+            ).map((x: MedicalFile) => ({
               ...x,
               birthDate: x.birthDate ? new Date(x.birthDate) : x,
             }))

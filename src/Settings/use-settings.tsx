@@ -70,7 +70,7 @@ export default function useSettings() {
   return [settingsComplete, settings, upsertSetting, settingsFields] as [
     settingsComplete: boolean,
     settings: typeof settings,
-    upsertSetting: typeof setSettings,
+    upsertSetting: (settings: Partial<Settings>) => void,
     settingsFields: typeof settingsFields,
   ]
 }

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
+
 import useSettings from './use-settings'
 
 export default function Settings({
