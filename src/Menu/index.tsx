@@ -1,7 +1,7 @@
 import { save, open } from '@tauri-apps/api/dialog'
 import { readTextFile, writeTextFile } from '@tauri-apps/api/fs'
 
-import { ReactComponent as Cog } from '../../public/cog.svg'
+import { ReactComponent as Cog } from './cog.svg'
 import type { MedicalFile } from '../types'
 
 type Props = {
