@@ -54,6 +54,7 @@ function App() {
                 {
                   allergies: 'aucune',
                   anamnesis: '',
+                  symtpoAnte: '',
                   anteriorMedical: 'aucun',
                   birthDate: new Date(),
                   clinicalExam: '',
