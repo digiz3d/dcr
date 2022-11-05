@@ -17,8 +17,10 @@ export default function File({
   const [, settings] = useSettings()
   return (
     <div className="flex flex-col gap-4 p-2 bg-white h-max m-2 ml-0 w-full rounded-md">
+      <div style={{ fontWeight: 'bold' }}>DENTISTE ADRESSANT</div>
+
       <label>
-        Dentiste
+        Nom dentiste adressant
         <input
           className="block p-1 border border-gray-500"
           type="text"
@@ -28,7 +30,7 @@ export default function File({
       </label>
 
       <label>
-        Ville dentiste
+        Ville dentiste adressant
         <input
           className="block p-1 border border-gray-500"
           type="text"
@@ -36,6 +38,43 @@ export default function File({
           onChange={(e) => onChange({ dentistCity: e.target.value })}
         />
       </label>
+
+      <fieldset className="border p-2">
+        <legend>Genre dentiste adressant</legend>
+        <div>
+          <input
+            className="cursor-pointer"
+            type="radio"
+            id="homme"
+            name="dagenre"
+            value="m"
+            checked={file.dentistGender === 'm'}
+            onChange={(e) => onChange({ dentistGender: 'm' })}
+          />
+          <label className="pl-2 cursor-pointer" htmlFor="homme">
+            Homme
+          </label>
+        </div>
+
+        <div>
+          <input
+            className="cursor-pointer"
+            type="radio"
+            id="femme"
+            name="dagenre"
+            value="f"
+            checked={file.dentistGender === 'f'}
+            onChange={(e) => onChange({ dentistGender: 'f' })}
+          />
+          <label className="pl-2 cursor-pointer" htmlFor="femme">
+            Femme
+          </label>
+        </div>
+      </fieldset>
+
+      <hr />
+
+      <div style={{ fontWeight: 'bold' }}>PATIENT</div>
 
       <fieldset className="border p-2">
         <legend>Genre</legend>
@@ -141,6 +180,15 @@ export default function File({
           className="block p-1 border border-gray-500 resize-y w-full"
           onChange={(e) => onChange({ anamnesis: e.target.value })}
           value={file.anamnesis}
+        />
+      </label>
+
+      <label>
+        Symptomatologie dentaire antérieure
+        <textarea
+          className="block p-1 border border-gray-500 resize-y w-full"
+          onChange={(e) => onChange({ symtpoAnte: e.target.value })}
+          value={file.symtpoAnte}
         />
       </label>
 

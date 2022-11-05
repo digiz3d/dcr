@@ -20,11 +20,13 @@ export type Tooth = {
 }
 
 export type MedicalFile = {
-  patientFirstName: string
-  patientLastName: string
   dentistName: string
   dentistCity: string
+  dentistGender: string // 'Homme' | 'Femme'
+  patientFirstName: string
+  patientLastName: string
   anteriorMedical: string
+  symtpoAnte: string
   medications: string
   allergies: string
   gender: string // 'Homme' | 'Femme'
