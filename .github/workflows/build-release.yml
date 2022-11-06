@@ -1,9 +1,8 @@
-name: 'Build and publish release'
+name: "Build and publish release"
 
 on:
   push:
     branches:
-      - feat/auto-build
       - release
 
 jobs:
