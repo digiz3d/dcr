@@ -112,7 +112,7 @@ export default function File({
       <label>
         Prénom
         <input
-          className="block p-1 border border-gray-500"
+          className="block p-1 border border-gray-500 w-60"
           type="text"
           value={file.patientFirstName}
           onChange={(e) => onChange({ patientFirstName: e.target.value })}
@@ -122,7 +122,7 @@ export default function File({
       <label>
         Nom
         <input
-          className="block p-1 border border-gray-500"
+          className="block p-1 border border-gray-500 w-60"
           type="text"
           value={file.patientLastName}
           onChange={(e) => onChange({ patientLastName: e.target.value })}
@@ -197,7 +197,7 @@ export default function File({
       <label>
         Examen clinique
         <textarea
-          className="block p-1 border border-gray-500 resize-y w-full"
+          className="block p-1 border border-gray-500 resize-y w-full h-40"
           onChange={(e) => onChange({ clinicalExam: e.target.value })}
           value={file.clinicalExam}
         />
@@ -207,12 +207,13 @@ export default function File({
 
       <hr />
 
+      <div style={{ fontWeight: 'bold' }}>Radiographies</div>
       <Photo file={file} onChange={onChange} />
 
       <label>
         Examen radiographique RA
         <textarea
-          className="block p-1 border border-gray-500 resize-y w-full"
+          className="block p-1 border border-gray-500 resize-y w-full h-40"
           onChange={(e) => onChange({ radioExamRA: e.target.value })}
           value={file.radioExamRA}
         />
@@ -221,7 +222,7 @@ export default function File({
       <label>
         Examen radiographique CBCT
         <textarea
-          className="block p-1 border border-gray-500 resize-y w-full"
+          className="block p-1 border border-gray-500 resize-y w-full h-40"
           onChange={(e) => onChange({ radioExamCBCT: e.target.value })}
           value={file.radioExamCBCT}
         />
@@ -243,7 +244,7 @@ export default function File({
       <label>
         Traitement envisagé
         <textarea
-          className="block p-1 border border-gray-500 resize-y w-full"
+          className="block p-1 border border-gray-500 resize-y w-full h-40"
           onChange={(e) => onChange({ treatment: e.target.value })}
           value={file.treatment}
         />
@@ -258,6 +259,7 @@ export default function File({
       >
         Sauvegarder PDF
       </div>
+
       {process.env.NODE_ENV !== 'production' && settings && (
         <PDFViewer className="h-[1000px]">
           <Report file={file} settings={settings} />

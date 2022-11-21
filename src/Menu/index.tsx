@@ -17,13 +17,15 @@ export default function Menu({
 }: Props) {
   return (
     <div className="flex flex-row justify-around border-t p-2 bg-white gap-1">
-      <div className="flex flex-1 bg-green-400 rounded-3xl">
+      <div className="flex flex-1 bg-green-400 rounded-3xl hover:bg-green-500">
         <button
           className="flex-1 p-2"
           onClick={async () => {
             const path = await save({
               title: 'Enregistrer les dossiers des patients',
-              defaultPath: `./${new Date().toISOString().split('T')[0]}.json`,
+              defaultPath:
+                'Dossier médical ' +
+                `./${new Date().toISOString().split('T')[0]}.json`,
               filters: [{ name: 'json files', extensions: ['json'] }],
             })
 
@@ -33,7 +35,7 @@ export default function Menu({
           Save
         </button>
       </div>
-      <div className="flex flex-1 bg-yellow-400 rounded-3xl">
+      <div className="flex flex-1 bg-yellow-400 rounded-3xl hover:bg-yellow-500">
         <button
           className="flex-1 p-2"
           onClick={async () => {

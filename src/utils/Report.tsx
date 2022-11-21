@@ -163,7 +163,9 @@ export default function Report({ file, settings }: Props) {
 
         {/* Intro */}
         <View wrap={false}>
-          <Text style={styles.margin_s}>Cher confrère, Chère consœur,</Text>
+          <Text style={styles.margin_s}>{`${
+            file.dentistGender == 'm' ? 'Cher confrère,' : 'Chère consœur,'
+          }`}</Text>
           <Text style={styles.margin_l}>
             {`J'ai reçu votre ${
               file.gender == 'm' ? 'patient, Monsieur' : 'patiente, Madame'
@@ -184,6 +186,7 @@ export default function Report({ file, settings }: Props) {
           <Text>Médicaments : {file.medications}</Text>
           <Text style={styles.margin_s}>Allergie : {file.allergies}</Text>
           <Text>{file.anamnesis}</Text>
+          <Text>{file.symtpoAnte}</Text>
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>
@@ -192,6 +195,7 @@ export default function Report({ file, settings }: Props) {
         <View style={styles.margin_l}>
           <Text style={[styles.margin_s, styles.bold]}>Examen clinique</Text>
           <Text style={[styles.margin_s]}>{file.clinicalExam}</Text>
+          <Page></Page>
           <Table teeth={file.teeth}></Table>
         </View>
 
