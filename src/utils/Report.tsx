@@ -195,7 +195,6 @@ export default function Report({ file, settings }: Props) {
         <View style={styles.margin_l}>
           <Text style={[styles.margin_s, styles.bold]}>Examen clinique</Text>
           <Text style={[styles.margin_s]}>{file.clinicalExam}</Text>
-          <Page></Page>
           <Table teeth={file.teeth}></Table>
         </View>
 

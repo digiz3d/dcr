@@ -5,7 +5,7 @@ import type { MedicalFile } from '../../types'
 
 function defaultPreviewDiv() {
   return (
-    <div className="border-dotted border-black inline-block border-2 m-1 w-60 h-60 rounded-lg"></div>
+    <div className="border-dotted border-black inline-block m-1 border-2 h-60 w-60 rounded-lg"></div>
   )
 }
 
@@ -18,10 +18,10 @@ export default function Photo({
 }) {
   return (
     <div className="flex flex-col justify-center">
-      <div>
+      <div className="flex flex-row">
         {file.photo ? (
           file.photo[0] ? (
-            <img className="m-1 inline h-60" src={file.photo[0]} />
+            <img className="m-1 inline-block h-60" src={file.photo[0]} />
           ) : (
             defaultPreviewDiv()
           )
@@ -30,7 +30,7 @@ export default function Photo({
         )}
         {file.photo ? (
           file.photo[1] ? (
-            <img className="m-1 inline h-60" src={file.photo[1]} />
+            <img className="m-1 inline-block h-60" src={file.photo[1]} />
           ) : (
             defaultPreviewDiv()
           )
@@ -39,7 +39,7 @@ export default function Photo({
         )}
         {file.photo ? (
           file.photo[2] ? (
-            <img className="m-1 inline h-60" src={file.photo[2]} />
+            <img className="m-1 inline-block h-60" src={file.photo[2]} />
           ) : (
             defaultPreviewDiv()
           )
