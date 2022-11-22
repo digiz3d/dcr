@@ -1,3 +1,7 @@
+import dayjs from 'dayjs'
+import 'dayjs/locale/fr'
+dayjs.locale('fr')
+
 import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
@@ -16,20 +20,40 @@ export default function Settings({
           <h1 className="text-xl mb-4">Paramètres</h1>
           <div className="flex flex-col gap-2">
             {fields.map((field) => (
-              <label key={field.name}>
-                {field.label}
-                <input
-                  className="w-64 p-1 block p-1 border border-gray-500"
-                  type="text"
-                  value={settings?.[field.name] || ''}
-                  onChange={(e) =>
-                    upsertSetting({ [field.name]: e.target.value })
-                  }
-                  onBlur={(e) =>
-                    upsertSetting({ [field.name]: e.target.value.trim() })
-                  }
-                />
-              </label>
+              <div
+                key={field.name}
+                className="flex flex-row items-center align-middle"
+              >
+                <label>
+                  {field.label}
+                  <input
+                    className="w-64 p-1 block p-1 border border-gray-500"
+                    type="text"
+                    value={settings?.[field.name] || ''}
+                    onChange={(e) =>
+                      upsertSetting({ [field.name]: e.target.value })
+                    }
+                    onBlur={(e) =>
+                      upsertSetting({ [field.name]: e.target.value.trim() })
+                    }
+                  />
+                </label>
+                {field.name === 'when' ? (
+                  <button
+                    className={clsx(
+                      'text-left rounded-md cursor-pointer disabled:cursor-not-allowed',
+                      'ml-4 p-2 border bg-indigo-100 hover:bg-indigo-200',
+                    )}
+                    onClick={() => {
+                      upsertSetting({
+                        [field.name]: `${dayjs().format('dddd D MMMM YYYY')}`,
+                      })
+                    }}
+                  >
+                    ▶ Maintenant
+                  </button>
+                ) : null}
+              </div>
             ))}
           </div>
           <button
