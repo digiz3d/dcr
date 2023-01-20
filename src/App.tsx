@@ -53,23 +53,42 @@ function App() {
                 ...c,
                 {
                   allergies: 'aucune',
-                  anamnesis: '',
-                  symtpoAnte: '',
+                  anamnesis: 'Date couronne / traitement endodontique',
+                  symtpoAnte:
+                    "Douleurs, tuméfaction, prise d'antalgiques/antibiotiques, découverte fortuite",
                   anteriorMedical: 'aucun',
                   birthDate: new Date(),
-                  clinicalExam: '',
+                  clinicalExam: 'Pas de douleurs / Douleurs depuis + EVA',
                   dentistCity: '',
                   dentistName: '',
                   dentistGender: '',
+                  addressingDate: new Date(),
                   diagnostic: '',
                   gender: '',
                   medications: 'aucun',
                   patientFirstName: '',
                   patientLastName: '',
-                  radioExamCBCT: '',
-                  radioExamRA: '',
+                  radioExamCBCT:
+                    "Absence de visibilité d'une lumière canalaire\n" +
+                    'Présence d’un canal MV2\n' +
+                    'Trajet apical commun dans la racine\n' +
+                    'Lésion radioclaire périapicale d’origine endodontique\n' +
+                    'Diamètre de la lésion : ' +
+                    'Épaississement membrane sinusienne',
+                  radioExamRA:
+                    'Lésion carieuse secondaire\n' +
+                    "Présence d'un ancrage radiculaire dans la racine\n" +
+                    'Traitement endodontique ne respectant pas les critères de qualité radiographique en termes de longueur, conicité et densité.\n' +
+                    "Lésion radioclaire périapicale d'origine endodontique\n" +
+                    "Pas d'épaississement ligamentaire et visibilité de la lamina dura",
                   teeth: [],
-                  treatment: '',
+                  treatment:
+                    'Dépose de la couronne et de l’ancrage radiculaire /Dépose des matériaux d’obturation coronaire\n' +
+                    'Réévaluation de la conservation de la dent\n' +
+                    'Retraitement endodontique / Traitement endodontique\n' +
+                    'Réalisation d’une obturation coronaire étanche par le chirurgien-dentiste traitant\n' +
+                    'Dent non conservable -> avulsion à réaliser et remplacement par un implant idéalement' +
+                    'Suivi clinique et radiographique annuel. Si apparition d’une symptomatologie ou augmentation du volume de la lésion d’origine endodontique -> indication de retraitement endodontique.',
                 },
               ])
               setCurrentMedicalFileIndex(medicalFiles.length)

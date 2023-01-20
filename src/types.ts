@@ -7,11 +7,11 @@ export type Tooth = {
    */
   id: number
   treatmentType: 'treatment' | 'retreatment' | 'advice' | 'surgery'
-  thermicTest: '/' | 'positive' | 'negative'
-  electricTest: '/' | 'negative' | number // if positive, 1-80
-  percutionTest: 'negative' | 'sensitive' | 'positive'
-  palpationTestV: 'negative' | 'sensitive' | 'positive'
-  palpationTestL: 'negative' | 'sensitive' | 'positive'
+  thermicTest: '/' | 'Positif' | 'Négatif'
+  electricTest: '/' | 'Négatif' | number // if positif, 1-80
+  percutionTest: 'Négatif' | 'Sensible' | 'Positif'
+  palpationTestV: 'Négatif' | 'Sensible' | 'Positif'
+  palpationTestL: 'Négatif' | 'Sensible' | 'Positif'
   parodontalProbing: string
   /**
    * 0-4
@@ -22,6 +22,7 @@ export type Tooth = {
 export type MedicalFile = {
   dentistName: string
   dentistCity: string
+  addressingDate: Date
   dentistGender: string // 'Homme' | 'Femme'
   patientFirstName: string
   patientLastName: string

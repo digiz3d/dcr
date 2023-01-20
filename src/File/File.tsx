@@ -1,6 +1,8 @@
 import { PDFViewer } from '@react-pdf/renderer'
+import { Console } from 'console'
 import useSettings from '../Settings/use-settings'
 import type { MedicalFile } from '../types'
+import { ClipboardDesmosOutput } from '../utils/desmosReport'
 import Report from '../utils/Report'
 import Photo from './Photo'
 
@@ -36,6 +38,20 @@ export default function File({
           type="text"
           value={file.dentistCity}
           onChange={(e) => onChange({ dentistCity: e.target.value })}
+        />
+      </label>
+
+      <label>
+        Date courrier adressage
+        <input
+          className="block p-1 border border-gray-500"
+          type="date"
+          defaultValue={file.addressingDate.toISOString().split('T')[0]}
+          onChange={(e) => {
+            const validDate = new Date(e.target.value)
+            if (isNaN(validDate.getTime())) return
+            onChange({ addressingDate: validDate })
+          }}
         />
       </label>
 
@@ -249,8 +265,9 @@ export default function File({
           value={file.treatment}
         />
       </label>
+
       <div
-        className="inline-block font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
+        className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
           if (!settings) return alert('nooo')
           const { generatePdf } = await import('../utils/generatePdf')
@@ -258,6 +275,17 @@ export default function File({
         }}
       >
         Sauvegarder PDF
+      </div>
+
+      <div
+        className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
+        onClick={async () => {
+          if (!settings) return alert('nooo')
+          console.log('Hello test')
+          ClipboardDesmosOutput(file)
+        }}
+      >
+        Copy file to clipboard
       </div>
 
       {process.env.NODE_ENV !== 'production' && settings && (

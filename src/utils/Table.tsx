@@ -77,7 +77,7 @@ export default function Table({ teeth }: Props) {
             <Text>{t.parodontalProbing}</Text>
           </View>
           <View style={style.col7}>
-            <Text>{t.mobility}</Text>
+            <Text>{t.mobility == 'NE' ? 'Non évaluable' : t.mobility}</Text>
           </View>
         </Row>
       ))}

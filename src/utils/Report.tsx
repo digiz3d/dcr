@@ -1,4 +1,5 @@
 import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
+import { BlockList } from 'net'
 import useSettings from '../Settings/use-settings'
 
 import { MedicalFile, Settings } from '../types'
@@ -12,7 +13,7 @@ const trad: Record<MedicalFile['teeth'][number]['treatmentType'], string> = {
   surgery: 'chirurgie',
 }
 
-function teethToString(teeth: MedicalFile['teeth']) {
+export function teethToString(teeth: MedicalFile['teeth']) {
   //le action de teeth[0], (le action de teeth[1-(n-1)]]) et le action de teeth[n]
   let res = ''
   for (let i = 0; i < teeth.length; i++) {
@@ -30,10 +31,18 @@ function teethToString(teeth: MedicalFile['teeth']) {
           teeth[i].id
         break
       case 'advice':
-        res += 'un ' + trad[teeth[i].treatmentType] + ' sur ' + teeth[i].id
+        res +=
+          'un ' +
+          trad[teeth[i].treatmentType] +
+          ' endodontique sur ' +
+          teeth[i].id
         break
       case 'surgery':
-        res += 'une ' + trad[teeth[i].treatmentType] + ' sur ' + teeth[i].id
+        res +=
+          'une ' +
+          trad[teeth[i].treatmentType] +
+          ' endodontique sur ' +
+          teeth[i].id
         break
     }
   }
@@ -167,7 +176,7 @@ export default function Report({ file, settings }: Props) {
             file.dentistGender == 'm' ? 'Cher confrère,' : 'Chère consœur,'
           }`}</Text>
           <Text style={styles.margin_l}>
-            {`J'ai reçu votre ${
+            {`Je vous remercie de m'avoir adressé votre ${
               file.gender == 'm' ? 'patient, Monsieur' : 'patiente, Madame'
             } ${file.patientLastName} ${file.patientFirstName}, ${
               file.gender == 'm' ? 'né' : 'née'
@@ -201,17 +210,25 @@ export default function Report({ file, settings }: Props) {
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Examen radiologique */}
+        <Text style={[styles.margin_s, styles.bold]}>Examen radiologique</Text>
         <View style={styles.margin_l}>
-          <Text style={[styles.margin_s, styles.bold]}>
-            Examen radiologique
-          </Text>
           <View style={[styles.margin_m, styles.image_container]}>
             {file.photo &&
               file.photo.map((src) => (
                 <Image key={src} style={styles.image} source={src} />
               ))}
           </View>
-          <Text style={styles.margin_s}>{file.radioExamRA}</Text>
+          {file.radioExamRA && (
+            <Text style={[styles.margin_s]}>
+              Examen radiographique rétro-alvéolaire :
+            </Text>
+          )}
+          {file.radioExamRA && (
+            <Text style={styles.margin_l}>{file.radioExamRA}</Text>
+          )}
+          {file.radioExamCBCT && (
+            <Text style={[styles.margin_s]}>Examen radiographique CBCT :</Text>
+          )}
           {file.radioExamCBCT && (
             <Text style={styles.margin_s}>{file.radioExamCBCT}</Text>
           )}
@@ -228,17 +245,19 @@ export default function Report({ file, settings }: Props) {
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Attitude thérapeutique */}
-        <View style={styles.margin_xxl} wrap={false}>
-          <Text style={[styles.margin_s, styles.bold]}>
-            Attitude thérapeutique
-          </Text>
-          <Text>{file.treatment}</Text>
-        </View>
+        <View style={{ display: 'flex' }}>
+          <View style={styles.margin_xxl} wrap={false}>
+            <Text style={[styles.margin_s, styles.bold]}>
+              Attitude thérapeutique
+            </Text>
+            <Text>{file.treatment}</Text>
+          </View>
 
-        {/* Signature */}
-        <View style={styles.sign}>
-          <Text style={styles.margin_s}>Confraternellement,</Text>
-          <Text>{settings.doctorName}</Text>
+          {/* Signature */}
+          <View style={styles.sign}>
+            <Text style={styles.margin_s}>Confraternellement,</Text>
+            <Text>{settings.doctorName}</Text>
+          </View>
         </View>
       </Page>
     </Document>

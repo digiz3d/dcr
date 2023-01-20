@@ -18,6 +18,11 @@
       "fs": {
         "readFile": true,
         "writeFile": true
+      },
+      "clipboard": {
+        "all": true,
+        "readText": true,
+        "writeText": true
       }
     },
     "bundle": {

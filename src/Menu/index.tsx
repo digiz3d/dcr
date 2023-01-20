@@ -55,6 +55,7 @@ export default function Menu({
             ).map((x: MedicalFile) => ({
               ...x,
               birthDate: x.birthDate ? new Date(x.birthDate) : x,
+              addressingDate: x.addressingDate ? new Date(x.addressingDate) : x,
             }))
 
             setMedicalFiles(files)
