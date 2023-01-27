@@ -10,7 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@react-pdf/renderer": "^3.0.0",
+    "@react-pdf/renderer": "3.0.3",
     "@tauri-apps/api": "^1.1.0",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.6",

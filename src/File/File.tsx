@@ -1,5 +1,5 @@
 import { PDFViewer } from '@react-pdf/renderer'
-import { Console } from 'console'
+import { useEffect, useState } from 'react'
 import useSettings from '../Settings/use-settings'
 import type { MedicalFile } from '../types'
 import { ClipboardDesmosOutput } from '../utils/desmosReport'
@@ -12,13 +12,23 @@ import TeethTests from './TeethTests'
 export default function File({
   file,
   onChange,
+  settings,
 }: {
   file: MedicalFile
   onChange: (file: Partial<MedicalFile>) => void
+  settings: ReturnType<typeof useSettings>['settings']
 }) {
-  const [, settings] = useSettings()
+  const [x, setX] = useState(0)
+
+  useEffect(() => {
+    setX(Math.random())
+  }, [settings])
+
   return (
-    <div className="flex flex-col gap-4 p-2 bg-white h-max m-2 ml-0 w-full rounded-md">
+    <div
+      className="flex flex-col gap-4 p-2 bg-white h-max m-2 ml-0 w-full rounded-md"
+      key={x.toFixed(5)}
+    >
       <div style={{ fontWeight: 'bold' }}>DENTISTE ADRESSANT</div>
 
       <label>

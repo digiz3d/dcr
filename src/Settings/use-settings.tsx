@@ -24,6 +24,7 @@ export default function useSettings() {
 
   useEffect(() => {
     async function initSettings() {
+      console.log('initsettings')
       const localSettings = await localforage.getItem<string>('settings')
       if (!localSettings) return undefined
       try {
@@ -67,10 +68,10 @@ export default function useSettings() {
     settings?.doctorName && settings.doctorate && settings.address1,
   )
 
-  return [settingsComplete, settings, upsertSetting, settingsFields] as [
-    settingsComplete: boolean,
-    settings: typeof settings,
-    upsertSetting: (settings: Partial<Settings>) => void,
-    settingsFields: typeof settingsFields,
-  ]
+  return { settingsComplete, settings, upsertSetting, settingsFields } as {
+    settingsComplete: boolean
+    settings: typeof settings
+    upsertSetting: (settings: Partial<Settings>) => void
+    settingsFields: typeof settingsFields
+  }
 }

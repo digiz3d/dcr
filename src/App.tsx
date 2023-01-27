@@ -9,8 +9,9 @@ import useSettings from './Settings/use-settings'
 import Menu from './Menu'
 
 function App() {
-  const [isSettingsComplete] = useSettings()
-  const [isSettingsOpen, setIsSettingsOpen] = useState(!isSettingsComplete)
+  const { settings, settingsComplete, settingsFields, upsertSetting } =
+    useSettings()
+  const [isSettingsOpen, setIsSettingsOpen] = useState(!settingsComplete)
   const [medicalFiles, setMedicalFiles] = useState<MedicalFile[]>([])
   const [currentMedicalFileIndex, setCurrentMedicalFileIndex] = useState(0)
 
@@ -29,7 +30,15 @@ function App() {
 
   return (
     <div className="flex bg-gray-100 h-screen overflow">
-      {isSettingsOpen && <Settings onClose={() => setIsSettingsOpen(false)} />}
+      {isSettingsOpen && (
+        <Settings
+          settings={settings}
+          settingsComplete={settingsComplete}
+          settingsFields={settingsFields}
+          upsertSetting={upsertSetting}
+          onClose={() => setIsSettingsOpen(false)}
+        />
+      )}
       <div className="w-64 h-screen flex flex-col">
         <div className="flex flex-1 flex-col gap-2 h-screen overflow-y-auto p-2">
           <h1 className="text-lg">Dossiers des patients</h1>
@@ -108,6 +117,7 @@ function App() {
       <div className="flex flex-1 h-screen overflow-y-auto">
         {medicalFiles[currentMedicalFileIndex] ? (
           <File
+            settings={settings}
             key={currentMedicalFileIndex}
             file={medicalFiles[currentMedicalFileIndex]}
             onChange={onChange}

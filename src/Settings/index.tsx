@@ -10,9 +10,19 @@ import useSettings from './use-settings'
 
 export default function Settings({
   onClose,
-}: PropsWithChildren<{ onClose: () => void }>) {
-  const [complete, settings, upsertSetting, fields] = useSettings()
-
+  settingsComplete,
+  settings,
+  upsertSetting,
+  settingsFields,
+}: PropsWithChildren<{
+  onClose: () => void
+  settingsComplete: ReturnType<typeof useSettings>['settingsComplete']
+  settings: ReturnType<typeof useSettings>['settings']
+  upsertSetting: ReturnType<typeof useSettings>['upsertSetting']
+  settingsFields: ReturnType<typeof useSettings>['settingsFields']
+}>) {
+  const complete = settingsComplete
+  const fields = settingsFields
   return ReactDOM.createPortal(
     <div className="h-screen w-screen backdrop-blur bg-black bg-opacity-30 flex justify-center items-center">
       <div className="bg-white p-8 w-2/4 h-3/4 rounded-lg shadow-xl overflow-y-auto">
