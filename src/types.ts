@@ -42,6 +42,7 @@ export type MedicalFile = {
   radioExamCBCT: string
   diagnostic: string
   treatment: string
+  comment: string
 }
 
 export type Settings = {

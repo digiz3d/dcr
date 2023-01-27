@@ -292,6 +292,17 @@ export default function File({
         />
       </label>
 
+      <hr />
+
+      <label>
+        Commentaire desmos
+        <textarea
+          className="block p-1 border border-gray-500 resize-y w-full h-40"
+          onChange={(e) => onChange({ comment: e.target.value })}
+          value={file.comment}
+        />
+      </label>
+
       <div
         className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {

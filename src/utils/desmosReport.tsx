@@ -58,5 +58,8 @@ export async function ClipboardDesmosOutput(file: MedicalFile) {
   res += '\n'
   res += 'Attitude thérapeutique :\n' + file.treatment
 
+  res += '\n\n'
+  res += file.comment
+
   await writeText(res)
 }

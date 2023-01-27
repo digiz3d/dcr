@@ -101,6 +101,7 @@ function App() {
                     'Réalisation d’une obturation coronaire étanche par le chirurgien-dentiste traitant\n' +
                     'Dent non conservable -> avulsion à réaliser et remplacement par un implant idéalement' +
                     'Suivi clinique et radiographique annuel. Si apparition d’une symptomatologie ou augmentation du volume de la lésion d’origine endodontique -> indication de retraitement endodontique.',
+                  comment: '',
                 },
               ])
               setCurrentMedicalFileIndex(medicalFiles.length)
