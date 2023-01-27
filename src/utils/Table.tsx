@@ -25,14 +25,10 @@ const style = StyleSheet.create({
   col7: { ...col.col, flex: 0.6 },
 })
 
-function Row(props: PropsWithChildren) {
-  return <View wrap={false} style={style.row} {...props} />
-}
-
 export default function Table({ teeth }: Props) {
   return (
-    <View style={{ borderWidth: 0.5, borderColor: '#000' }}>
-      <Row>
+    <View wrap={false}>
+      <View style={style.row} key="header" fixed>
         <View style={style.col1}>
           <Text style={{ textAlign: 'center' }}>Dent</Text>
         </View>
@@ -54,9 +50,9 @@ export default function Table({ teeth }: Props) {
         <View style={style.col7}>
           <Text style={{ textAlign: 'center' }}>Mobilité</Text>
         </View>
-      </Row>
+      </View>
       {teeth.map((t) => (
-        <Row>
+        <View style={style.row} key={t.id}>
           <View style={style.col1}>
             <Text>{t.id}</Text>
           </View>
@@ -79,7 +75,7 @@ export default function Table({ teeth }: Props) {
           <View style={style.col7}>
             <Text>{t.mobility == 'NE' ? 'Non évaluable' : t.mobility}</Text>
           </View>
-        </Row>
+        </View>
       ))}
     </View>
   )

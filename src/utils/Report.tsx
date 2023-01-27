@@ -245,8 +245,8 @@ export default function Report({ file, settings }: Props) {
         <View style={[styles.border, styles.margin_l]}></View>
 
         {/* Attitude thérapeutique */}
-        <View style={{ display: 'flex' }}>
-          <View style={styles.margin_xxl} wrap={false}>
+        <View style={{ display: 'flex' }} wrap={false}>
+          <View style={styles.margin_xxl}>
             <Text style={[styles.margin_s, styles.bold]}>
               Attitude thérapeutique
             </Text>
