@@ -28,7 +28,7 @@ const style = StyleSheet.create({
 export default function Table({ teeth }: Props) {
   return (
     <View wrap={false}>
-      <View style={style.row} key="header" fixed>
+      <View style={style.row} fixed>
         <View style={style.col1}>
           <Text style={{ textAlign: 'center' }}>Dent</Text>
         </View>

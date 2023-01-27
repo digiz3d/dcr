@@ -9,8 +9,13 @@ import useSettings from './Settings/use-settings'
 import Menu from './Menu'
 
 function App() {
-  const { settings, settingsComplete, settingsFields, upsertSetting } =
-    useSettings()
+  const {
+    settings,
+    settingsComplete,
+    settingsFields,
+    upsertSetting,
+    persistSettings,
+  } = useSettings()
   const [isSettingsOpen, setIsSettingsOpen] = useState(!settingsComplete)
   const [medicalFiles, setMedicalFiles] = useState<MedicalFile[]>([])
   const [currentMedicalFileIndex, setCurrentMedicalFileIndex] = useState(0)
@@ -36,7 +41,10 @@ function App() {
           settingsComplete={settingsComplete}
           settingsFields={settingsFields}
           upsertSetting={upsertSetting}
-          onClose={() => setIsSettingsOpen(false)}
+          onClose={() => {
+            persistSettings()
+            setIsSettingsOpen(false)
+          }}
         />
       )}
       <div className="w-64 h-screen flex flex-col">

@@ -56,9 +56,8 @@ export default function useSettings() {
               where: '',
             }
           : prev
-      const newSettings = { ...previousValues, ...newValues }
-      localforage.setItem('settings', JSON.stringify(newSettings))
-      return newSettings
+
+      return { ...previousValues, ...newValues }
     })
   }, [])
 
@@ -66,10 +65,21 @@ export default function useSettings() {
     settings?.doctorName && settings.doctorate && settings.address1,
   )
 
-  return { settingsComplete, settings, upsertSetting, settingsFields } as {
+  const persistSettings = useCallback(() => {
+    localforage.setItem('settings', JSON.stringify(settings))
+  }, [settings])
+
+  return {
+    settingsComplete,
+    settings,
+    upsertSetting,
+    settingsFields,
+    persistSettings,
+  } as {
     settingsComplete: boolean
     settings: typeof settings
     upsertSetting: (settings: Partial<Settings>) => void
     settingsFields: typeof settingsFields
+    persistSettings: () => void
   }
 }
