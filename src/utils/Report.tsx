@@ -213,8 +213,8 @@ export default function Report({ file, settings }: Props) {
         <Text style={[styles.margin_s, styles.bold]}>Examen radiologique</Text>
         <View style={styles.margin_l}>
           <View style={[styles.margin_m, styles.image_container]}>
-            {file.photo &&
-              file.photo.map((src) => (
+            {file.photoOptimized &&
+              file.photoOptimized.map((src) => (
                 <Image key={src} style={styles.image} source={src} />
               ))}
           </View>

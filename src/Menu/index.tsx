@@ -3,6 +3,7 @@ import { readTextFile, writeTextFile } from '@tauri-apps/api/fs'
 
 import { ReactComponent as Cog } from './cog.svg'
 import type { MedicalFile } from '../types'
+import { picturePathToJpegBlobPath } from '../utils/photo'
 
 type Props = {
   medicalFiles: MedicalFile[]
@@ -50,13 +51,25 @@ export default function Menu({
 
             if (!path || Array.isArray(path)) return
 
-            const files: MedicalFile[] = JSON.parse(
-              await readTextFile(path),
-            ).map((x: MedicalFile) => ({
-              ...x,
-              birthDate: x.birthDate ? new Date(x.birthDate) : x,
-              addressingDate: x.addressingDate ? new Date(x.addressingDate) : x,
-            }))
+            const json = await readTextFile(path)
+            const objects = JSON.parse(json)
+
+            const files: MedicalFile[] = await Promise.all(
+              objects.map(
+                async (jsonMedicalFile: any): Promise<MedicalFile> => {
+                  const photoOptimized = await picturePathToJpegBlobPath(
+                    jsonMedicalFile.photo ?? [],
+                  )
+                  return {
+                    ...jsonMedicalFile,
+                    birthDate: new Date(jsonMedicalFile.birthDate),
+                    addressingDate: new Date(jsonMedicalFile.addressingDate),
+                    photo: jsonMedicalFile.photo ?? [],
+                    photoOptimized,
+                  }
+                },
+              ),
+            )
 
             setMedicalFiles(files)
           }}

@@ -82,6 +82,8 @@ function App() {
                     "Lésion radioclaire périapicale d'origine endodontique\n" +
                     "Pas d'épaississement ligamentaire et visibilité de la lamina dura",
                   teeth: [],
+                  photo: [],
+                  photoOptimized: [],
                   treatment:
                     'Dépose de la couronne et de l’ancrage radiculaire /Dépose des matériaux d’obturation coronaire\n' +
                     'Réévaluation de la conservation de la dent\n' +

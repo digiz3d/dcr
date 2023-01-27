@@ -35,7 +35,8 @@ export type MedicalFile = {
   teeth: Tooth[]
   anamnesis: string
   clinicalExam: string
-  photo?: string[]
+  photo: string[]
+  photoOptimized?: string[]
   radioExamRA: string
   radioExamCBCT: string
   diagnostic: string

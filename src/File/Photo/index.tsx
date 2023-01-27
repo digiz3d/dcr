@@ -1,10 +1,9 @@
 import { open } from '@tauri-apps/api/dialog'
-import { readBinaryFile } from '@tauri-apps/api/fs'
-import { compress, EImageType } from 'image-conversion'
 
 import type { MedicalFile } from '../../types'
+import { picturePathToJpegBlobPath } from '../../utils/photo'
 
-function defaultPreviewDiv() {
+function DefaultPreviewDiv() {
   return (
     <div className="border-dotted border-black inline-block m-1 border-2 h-60 w-60 rounded-lg"></div>
   )
@@ -20,20 +19,20 @@ export default function Photo({
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-row">
-        {file.photo?.[0] ? (
-          <img className="m-1 inline-block h-60" src={file.photo[0]} />
+        {file.photoOptimized?.[0] ? (
+          <img className="m-1 inline-block h-60" src={file.photoOptimized[0]} />
         ) : (
-          defaultPreviewDiv()
+          DefaultPreviewDiv()
         )}
-        {file.photo?.[1] ? (
-          <img className="m-1 inline-block h-60" src={file.photo[1]} />
+        {file.photoOptimized?.[1] ? (
+          <img className="m-1 inline-block h-60" src={file.photoOptimized[1]} />
         ) : (
-          defaultPreviewDiv()
+          DefaultPreviewDiv()
         )}
-        {file.photo?.[2] ? (
-          <img className="m-1 inline-block h-60" src={file.photo[2]} />
+        {file.photoOptimized?.[2] ? (
+          <img className="m-1 inline-block h-60" src={file.photoOptimized[2]} />
         ) : (
-          defaultPreviewDiv()
+          DefaultPreviewDiv()
         )}
       </div>
       <div className="flex flex-row justify-around p-2 w-80">
@@ -43,33 +42,17 @@ export default function Photo({
             onClick={async () => {
               const imagePath = await open({ multiple: true })
               if (!imagePath) return
-              if (Array.isArray(imagePath)) {
-                const jpegs = await Promise.all(
-                  imagePath.map(async (path) => {
-                    const imageBlob = await readBinaryFile(path)
-                    return compress(new Blob([imageBlob.buffer]), {
-                      type: EImageType.JPEG,
-                      quality: 100,
-                    })
-                  }),
-                )
-                onChange({
-                  photo: [
-                    ...(file.photo ? file.photo : []),
-                    ...jpegs.map((jpeg) => URL.createObjectURL(jpeg)),
-                  ],
-                })
-                return
-              }
-              const imageBlob = await readBinaryFile(imagePath)
-              const jpegBlob = await compress(new Blob([imageBlob.buffer]), {
-                type: EImageType.JPEG,
-                quality: 100,
-              })
+              const imagePaths = Array.isArray(imagePath)
+                ? imagePath
+                : [imagePath]
+
+              const jpegBlobPaths = await picturePathToJpegBlobPath(imagePaths)
+
               onChange({
-                photo: [
-                  ...(file.photo ? file.photo : []),
-                  URL.createObjectURL(jpegBlob),
+                photo: [...(file.photo ?? []), ...imagePaths],
+                photoOptimized: [
+                  ...(file.photoOptimized ?? []),
+                  ...jpegBlobPaths,
                 ],
               })
             }}

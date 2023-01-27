@@ -16,8 +16,10 @@
         "save": true
       },
       "fs": {
+        "all": true,
         "readFile": true,
-        "writeFile": true
+        "writeFile": true,
+        "scope": ["/*"]
       },
       "clipboard": {
         "all": true,
