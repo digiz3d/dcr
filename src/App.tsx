@@ -61,6 +61,7 @@ function App() {
               setMedicalFiles((c) => [
                 ...c,
                 {
+                  fileDate: new Date(),
                   allergies: 'aucune',
                   anamnesis: 'Date couronne / traitement endodontique',
                   symtpoAnte:

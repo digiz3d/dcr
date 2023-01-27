@@ -20,6 +20,7 @@ export type Tooth = {
 }
 
 export type MedicalFile = {
+  fileDate: Date
   dentistName: string
   dentistCity: string
   addressingDate: Date
@@ -56,5 +57,4 @@ export type Settings = {
   email: string
   rpps: string
   where: string
-  when: string
 }

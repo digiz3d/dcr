@@ -62,6 +62,7 @@ export default function Menu({
                   )
                   return {
                     ...jsonMedicalFile,
+                    fileDate: new Date(jsonMedicalFile.fileDate),
                     birthDate: new Date(jsonMedicalFile.birthDate),
                     addressingDate: new Date(jsonMedicalFile.addressingDate),
                     photo: jsonMedicalFile.photo ?? [],

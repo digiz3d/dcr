@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 import type { Settings } from '../types'
 
 const settingsFields: { name: keyof Settings; label: string }[] = [
-  { name: 'when', label: 'Quand' },
   { name: 'doctorName', label: 'Nom du Docteur' },
   { name: 'doctorate', label: 'Doctorat' },
   { name: 'diploma1', label: 'Diplôme 1' },
@@ -54,7 +53,6 @@ export default function useSettings() {
               medicalCenter: '',
               phoneNumber: '',
               rpps: '',
-              when: `${new Date().toISOString().split('T')[0]}`,
               where: '',
             }
           : prev

@@ -48,21 +48,6 @@ export default function Settings({
                     }
                   />
                 </label>
-                {field.name === 'when' ? (
-                  <button
-                    className={clsx(
-                      'text-left rounded-md cursor-pointer disabled:cursor-not-allowed',
-                      'ml-4 p-2 border bg-indigo-100 hover:bg-indigo-200',
-                    )}
-                    onClick={() => {
-                      upsertSetting({
-                        [field.name]: `${dayjs().format('dddd D MMMM YYYY')}`,
-                      })
-                    }}
-                  >
-                    ▶ Maintenant
-                  </button>
-                ) : null}
               </div>
             ))}
           </div>

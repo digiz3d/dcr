@@ -1,6 +1,5 @@
 import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
-import { BlockList } from 'net'
-import useSettings from '../Settings/use-settings'
+import dayjs from 'dayjs'
 
 import { MedicalFile, Settings } from '../types'
 import Table from './Table'
@@ -166,7 +165,8 @@ export default function Report({ file, settings }: Props) {
         {/* place + date */}
         <View style={[styles.date, styles.margin_xxl]}>
           <Text>
-            À {settings.where}, le {settings.when}
+            À {settings.where}, le{' '}
+            {dayjs(file.fileDate).format('dddd D MMMM YYYY')}
           </Text>
         </View>
 

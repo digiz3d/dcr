@@ -29,6 +29,22 @@ export default function File({
       className="flex flex-col gap-4 p-2 bg-white h-max m-2 ml-0 w-full rounded-md"
       key={x.toFixed(5)}
     >
+      <div style={{ fontWeight: 'bold' }}>DOSSIER MEDICAL</div>
+
+      <label>
+        Date dossier médical
+        <input
+          className="block p-1 border border-gray-500"
+          type="date"
+          defaultValue={file.fileDate.toISOString().split('T')[0]}
+          onChange={(e) => {
+            const validDate = new Date(e.target.value)
+            if (isNaN(validDate.getTime())) return
+            onChange({ fileDate: validDate })
+          }}
+        />
+      </label>
+
       <div style={{ fontWeight: 'bold' }}>DENTISTE ADRESSANT</div>
 
       <label>
