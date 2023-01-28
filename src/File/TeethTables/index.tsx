@@ -2,7 +2,7 @@ import type { MedicalFile, Tooth } from '../../types'
 
 import style from './index.module.scss'
 
-export default function TeethTests({
+export function TeethTests({
   file,
   onChange,
 }: {
@@ -26,7 +26,7 @@ export default function TeethTests({
     <table className={style.container}>
       <thead>
         <tr>
-          <th>Dent</th>
+          <th className="w-10">Dent</th>
           <th>Test thermique</th>
           <th>Test electrique</th>
           <th>Test percussion</th>
@@ -38,8 +38,8 @@ export default function TeethTests({
       <tbody>
         {file.teeth?.map((t) => (
           <tr key={t.id}>
-            <td>{t.id}</td>
-            <td>
+            <td className="w-10">{t.id}</td>
+            <td className="w-32">
               <div className={style.radioList}>
                 <div className={style.item}>
                   <input
@@ -77,7 +77,7 @@ export default function TeethTests({
                 </div>
               </div>
             </td>
-            <td>
+            <td className="w-32">
               <div className={style.radioList}>
                 <div className={style.item}>
                   <input
@@ -129,7 +129,7 @@ export default function TeethTests({
                 </div>
               </div>
             </td>
-            <td>
+            <td className="w-32">
               <div className={style.radioList}>
                 <div className={style.item}>
                   <input
@@ -169,7 +169,7 @@ export default function TeethTests({
                 </div>
               </div>
             </td>
-            <td>
+            <td className="w-40">
               <div className="grid gap-2 m-2 grid-cols-[repeat(4,15px)] justify-center">
                 <div></div>
                 <div>N</div>
@@ -237,16 +237,15 @@ export default function TeethTests({
               </div>
             </td>
             <td>
-              <input
-                className="inline border border-gray-500 p-2"
-                type="text"
+              <textarea
+                className="inline border border-gray-500 p-2 resize-none w-full h-32"
                 value={t.parodontalProbing}
                 onChange={(e) =>
                   onChangeTooth(t.id, 'parodontalProbing', e.target.value)
                 }
               />
             </td>
-            <td>
+            <td className="w-52">
               <div className="flex justify-center">
                 {[0, 1, 2, 3, 4, 'NE'].map((x) => (
                   <div
@@ -272,6 +271,64 @@ export default function TeethTests({
                   </div>
                 ))}
               </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+export function TeethComments({
+  file,
+  onChange,
+}: {
+  file: MedicalFile
+  onChange: (newMedicalFile: Partial<MedicalFile>) => void
+}) {
+  function onChangeTooth<
+    X extends MedicalFile['teeth'][number],
+    F extends keyof X,
+    T extends X[F],
+  >(teethId: number, field: F, newValue: T) {
+    console.log('updating', teethId, field, newValue)
+    onChange({
+      teeth: file.teeth?.map((t) =>
+        t.id === teethId ? { ...t, [field]: newValue } : t,
+      ),
+    })
+  }
+
+  return (
+    <table className={style.container}>
+      <thead>
+        <tr>
+          <th className="w-10">Dent</th>
+          <th>Restauration</th>
+          <th>Sous Microscope</th>
+        </tr>
+      </thead>
+      <tbody>
+        {file.teeth?.map((t) => (
+          <tr key={t.id}>
+            <td className="w-10">{t.id}</td>
+            <td>
+              <textarea
+                className="inline border border-gray-500 p-2 resize-none w-full "
+                value={t.restoration}
+                onChange={(e) =>
+                  onChangeTooth(t.id, 'restoration', e.target.value)
+                }
+              />
+            </td>
+            <td>
+              <textarea
+                className="inline border border-gray-500 p-2 resize-none w-full h-fit"
+                value={t.underMicroscope}
+                onChange={(e) =>
+                  onChangeTooth(t.id, 'underMicroscope', e.target.value)
+                }
+              />
             </td>
           </tr>
         ))}

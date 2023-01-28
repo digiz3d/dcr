@@ -72,6 +72,8 @@ export default function Teeth({
               parodontalProbing: 'physiologique',
               mobility: 1,
               treatmentType: 'retreatment',
+              restoration: '',
+              underMicroscope: '',
             },
           ],
         })

@@ -7,7 +7,7 @@ import Report from '../utils/Report'
 import Photo from './Photo'
 
 import Teeth from './Teeth'
-import TeethTests from './TeethTests'
+import { TeethComments, TeethTests } from './TeethTables'
 
 export default function File({
   file,
@@ -245,6 +245,7 @@ export default function File({
         />
       </label>
 
+      <TeethComments file={file} onChange={onChange} />
       <TeethTests file={file} onChange={onChange} />
 
       <hr />
