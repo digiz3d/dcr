@@ -1,5 +1,6 @@
 import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
 import dayjs from 'dayjs'
+import Teeth from '../File/Teeth'
 
 import { MedicalFile, Settings } from '../types'
 import Table from './Table'
@@ -99,6 +100,8 @@ const styles = StyleSheet.create({
 })
 
 export default function Report({ file, settings }: Props) {
+  console.log(file.teeth)
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -204,6 +207,23 @@ export default function Report({ file, settings }: Props) {
         <View style={styles.margin_l}>
           <Text style={[styles.margin_s, styles.bold]}>Examen clinique</Text>
           <Text style={[styles.margin_s]}>{file.clinicalExam}</Text>
+
+          <Text style={[styles.margin_s]}>
+            {file.teeth
+              .filter((x) => {
+                return x.restoration != '' || x.underMicroscope != ''
+              })
+              .map((x) => {
+                let res = ''
+                if (file.teeth.length > 1) res += `- ${x.id} - \n`
+                if (x.restoration != '')
+                  res += `Restauration : ${x.restoration}\n`
+                if (x.underMicroscope != '')
+                  res += `Sous microscope : ${x.underMicroscope}\n`
+                return res
+              })}
+          </Text>
+
           <Table teeth={file.teeth}></Table>
         </View>
 

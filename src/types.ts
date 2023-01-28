@@ -1,4 +1,6 @@
 export type Tooth = {
+  restoration: string
+  underMicroscope: string
   /**
    * 11-18
    * 21-28
@@ -17,8 +19,6 @@ export type Tooth = {
    * 0-4
    */
   mobility: 0 | 1 | 2 | 3 | 4 | 'NE'
-  restoration: string
-  underMicroscope: string
 }
 
 export type MedicalFile = {
