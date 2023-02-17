@@ -64,7 +64,7 @@ export default function Photo({
           <button
             className="flex-1 p-2"
             onClick={(e) => {
-              onChange({ photo: undefined })
+              onChange({ photo: undefined, photoOptimized: undefined })
             }}
           >
             Remove

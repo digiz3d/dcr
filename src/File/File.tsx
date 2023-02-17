@@ -68,10 +68,43 @@ export default function File({
       </label>
 
       <label>
+        Courrier d'adressage ?
+        <div>
+          <input
+            className="cursor-pointer"
+            type="radio"
+            id="true"
+            name="isLetter"
+            value="true"
+            checked={file.hasAddressingDate === 'true'}
+            onChange={(e) => onChange({ hasAddressingDate: 'true' })}
+          />
+          <label className="pl-2 cursor-pointer" htmlFor="true">
+            Oui
+          </label>
+        </div>
+        <div>
+          <input
+            className="cursor-pointer"
+            type="radio"
+            id="false"
+            name="isLetter"
+            value="false"
+            checked={file.hasAddressingDate === 'false'}
+            onChange={(e) => onChange({ hasAddressingDate: 'false' })}
+          />
+          <label className="pl-2 cursor-pointer" htmlFor="false">
+            Non
+          </label>
+        </div>
+      </label>
+
+      <label>
         Date courrier adressage
         <input
           className="block p-1 border border-gray-500"
           type="date"
+          disabled={file.hasAddressingDate === 'false'}
           defaultValue={file.addressingDate.toISOString().split('T')[0]}
           onChange={(e) => {
             const validDate = new Date(e.target.value)
@@ -87,13 +120,13 @@ export default function File({
           <input
             className="cursor-pointer"
             type="radio"
-            id="homme"
+            id="dhomme"
             name="dagenre"
             value="m"
             checked={file.dentistGender === 'm'}
             onChange={(e) => onChange({ dentistGender: 'm' })}
           />
-          <label className="pl-2 cursor-pointer" htmlFor="homme">
+          <label className="pl-2 cursor-pointer" htmlFor="dhomme">
             Homme
           </label>
         </div>
@@ -102,13 +135,13 @@ export default function File({
           <input
             className="cursor-pointer"
             type="radio"
-            id="femme"
+            id="dfemme"
             name="dagenre"
             value="f"
             checked={file.dentistGender === 'f'}
             onChange={(e) => onChange({ dentistGender: 'f' })}
           />
-          <label className="pl-2 cursor-pointer" htmlFor="femme">
+          <label className="pl-2 cursor-pointer" htmlFor="dfemme">
             Femme
           </label>
         </div>
@@ -319,7 +352,6 @@ export default function File({
         className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
           if (!settings) return alert('nooo')
-          console.log('Hello test')
           ClipboardDesmosOutput(file)
         }}
       >

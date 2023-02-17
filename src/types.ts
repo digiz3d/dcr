@@ -25,6 +25,7 @@ export type MedicalFile = {
   fileDate: Date
   dentistName: string
   dentistCity: string
+  hasAddressingDate: string // 'true' | false
   addressingDate: Date
   dentistGender: string // 'Homme' | 'Femme'
   patientFirstName: string

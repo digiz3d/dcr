@@ -80,6 +80,7 @@ function App() {
                   dentistCity: '',
                   dentistName: '',
                   dentistGender: '',
+                  hasAddressingDate: 'true',
                   addressingDate: new Date(),
                   diagnostic: '',
                   gender: '',
@@ -91,7 +92,7 @@ function App() {
                     'Présence d’un canal MV2\n' +
                     'Trajet apical commun dans la racine\n' +
                     'Lésion radioclaire périapicale d’origine endodontique\n' +
-                    'Diamètre de la lésion : ' +
+                    'Diamètre de la lésion :\n' +
                     'Épaississement membrane sinusienne',
                   radioExamRA:
                     'Lésion carieuse secondaire\n' +
@@ -107,7 +108,7 @@ function App() {
                     'Réévaluation de la conservation de la dent\n' +
                     'Retraitement endodontique / Traitement endodontique\n' +
                     'Réalisation d’une obturation coronaire étanche par le chirurgien-dentiste traitant\n' +
-                    'Dent non conservable -> avulsion à réaliser et remplacement par un implant idéalement' +
+                    'Dent non conservable -> avulsion à réaliser et remplacement par un implant idéalement\n' +
                     'Suivi clinique et radiographique annuel. Si apparition d’une symptomatologie ou augmentation du volume de la lésion d’origine endodontique -> indication de retraitement endodontique.',
                   comment: '',
                 },

@@ -2,6 +2,7 @@ import { MedicalFile } from '../types'
 import { teethToString } from './Report'
 
 import { writeText, readText } from '@tauri-apps/api/clipboard'
+import dayjs from 'dayjs'
 
 export async function ClipboardDesmosOutput(file: MedicalFile) {
   let res: string = ''
@@ -12,10 +13,15 @@ export async function ClipboardDesmosOutput(file: MedicalFile) {
     ' (' +
     file.dentistCity +
     ') pour ' +
-    teethToString(file.teeth) +
-    '\n'
+    teethToString(file.teeth)
 
-  res += '\n'
+  res +=
+    ' ' +
+    (file.hasAddressingDate == 'true'
+      ? `(Courrier datant du ${dayjs(file.fileDate).format('DD/MM/YYYY')})`
+      : "(Pas de courrier d'adressage)")
+
+  res += '\n\n'
 
   res += 'Anamnèse :\n'
   res += 'Antécédents médicaux : ' + file.anteriorMedical + '\n'
@@ -24,7 +30,22 @@ export async function ClipboardDesmosOutput(file: MedicalFile) {
 
   res += '\n'
 
-  res += 'Examen clinique\n' + file.clinicalExam + '\n\n'
+  res += 'Examen clinique :\n' + file.clinicalExam + '\n\n'
+
+  res += file.teeth
+    .filter((x) => {
+      return x.restoration != '' || x.underMicroscope != ''
+    })
+    .map((x) => {
+      let res = ''
+      if (file.teeth.length > 1) res += `- ${x.id} - \n`
+      if (x.restoration != '') res += `Restauration : ${x.restoration}\n`
+      if (x.underMicroscope != '')
+        res += `Sous microscope : ${x.underMicroscope}\n`
+      return res
+    })
+
+  res += '\n'
 
   file.teeth.map((x) => {
     res += x.id + ' - '
@@ -50,15 +71,23 @@ export async function ClipboardDesmosOutput(file: MedicalFile) {
   })
 
   res += '\n'
-  res += 'Examen radiographique rétro-alvéolaire :\n' + file.radioExamRA + '\n'
-  res += '\n'
-  res += 'Examen radiographique CBCT :\n' + file.radioExamCBCT + '\n'
-  res += '\n'
-  res += 'Diagnostic :\n' + file.diagnostic + '\n'
-  res += '\n'
-  res += 'Attitude thérapeutique :\n' + file.treatment
-
-  res += '\n\n'
+  if (file.radioExamRA != '') {
+    res +=
+      'Examen radiographique rétro-alvéolaire :\n' + file.radioExamRA + '\n'
+    res += '\n'
+  }
+  if (file.radioExamCBCT != '') {
+    res += 'Examen radiographique CBCT :\n' + file.radioExamCBCT + '\n'
+    res += '\n'
+  }
+  if (file.diagnostic != '') {
+    res += 'Diagnostic :\n' + file.diagnostic + '\n'
+    res += '\n'
+  }
+  if (file.treatment != '') {
+    res += 'Attitude thérapeutique :\n' + file.treatment + '\n'
+    res += '\n'
+  }
   res += file.comment
 
   await writeText(res)
