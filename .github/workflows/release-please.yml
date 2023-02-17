@@ -52,6 +52,8 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - name: use correct bundle version
+        run: jq -r '.version' package.json > version.txt && jq --arg version "$(cat version.txt)" '.package.version = $version' src-tauri/tauri.conf.json > tmp && mv tmp src-tauri/tauri.conf.json
       - name: install app dependencies and build it
         run: yarn && yarn tauri build
       - uses: tauri-apps/tauri-action@v0
