@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/digiz3d/dcr/compare/v1.0.0...v1.1.0) (2023-02-17)
+
+
+### Features
+
+* Added new app icon ([0dbf289](https://github.com/digiz3d/dcr/commit/0dbf289d65a292a35f7ffa51f384d7110f408c6d))
+
 ## 1.0.0 (2023-02-17)
 
 
