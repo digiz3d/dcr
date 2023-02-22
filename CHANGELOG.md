@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/digiz3d/dcr/compare/v1.1.0...v1.1.1) (2023-02-22)
+
+
+### Bug Fixes
+
+* allow loading files missing some pictures ([859b7c6](https://github.com/digiz3d/dcr/commit/859b7c6ceea8edca95844bee01d365ec1fdd1880))
+
 ## [1.1.0](https://github.com/digiz3d/dcr/compare/v1.0.0...v1.1.0) (2023-02-17)
 
 
