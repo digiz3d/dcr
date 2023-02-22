@@ -54,12 +54,20 @@ export default function Menu({
             const json = await readTextFile(path)
             const objects = JSON.parse(json)
 
+            let someFilesCouldNotBeLoaded = false
+            
             const files: MedicalFile[] = await Promise.all(
               objects.map(
                 async (jsonMedicalFile: any): Promise<MedicalFile> => {
-                  const photoOptimized = await picturePathToJpegBlobPath(
-                    jsonMedicalFile.photo ?? [],
-                  )
+                  let photoOptimized: string[]
+                  try {
+                    photoOptimized = await picturePathToJpegBlobPath(
+                      jsonMedicalFile.photo ?? [],
+                    )
+                  } catch (error) {
+                    someFilesCouldNotBeLoaded = true
+                    photoOptimized = []
+                  }
                   return {
                     ...jsonMedicalFile,
                     fileDate: new Date(jsonMedicalFile.fileDate),
@@ -71,6 +79,8 @@ export default function Menu({
                 },
               ),
             )
+
+            if(someFilesCouldNotBeLoaded) alert('Certaines images n\'ont pas pu être chargées')
 
             setMedicalFiles(files)
           }}
