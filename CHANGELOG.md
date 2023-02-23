@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/digiz3d/dcr/compare/v1.1.2...v1.1.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* **CI:** correctly update version during build ([2d6094a](https://github.com/digiz3d/dcr/commit/2d6094aa4e26ace9e13f1782b678c98c9a531486))
+
 ## [1.1.2](https://github.com/digiz3d/dcr/compare/v1.1.1...v1.1.2) (2023-02-23)
 
 
