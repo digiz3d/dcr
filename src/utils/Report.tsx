@@ -197,8 +197,10 @@ export default function Report({ file, settings }: Props) {
           <Text>Antécédents médicaux : {file.anteriorMedical}</Text>
           <Text>Médicaments : {file.medications}</Text>
           <Text style={styles.margin_s}>Allergie : {file.allergies}</Text>
-          <Text>{file.anamnesis}</Text>
-          <Text>{file.symtpoAnte}</Text>
+          <Text>Historique dentaire : {file.anamnesis}</Text>
+          <Text style={styles.margin_s}>
+            Symptomatologie : {file.symtpoAnte}
+          </Text>
         </View>
 
         <View style={[styles.border, styles.margin_l]}></View>

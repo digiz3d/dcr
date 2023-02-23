@@ -30,6 +30,11 @@ export async function ClipboardDesmosOutput(file: MedicalFile) {
 
   res += '\n'
 
+  res += 'Historique dentaire : ' + file.anamnesis + '\n'
+  res += 'Symptomatologie : ' + file.symtpoAnte + '\n'
+
+  res += '\n'
+
   res += 'Examen clinique :\n' + file.clinicalExam + '\n\n'
 
   res += file.teeth
