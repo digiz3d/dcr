@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/digiz3d/dcr/compare/v1.1.1...v1.1.2) (2023-02-23)
+
+
+### Bug Fixes
+
+* Added missing fields in report and desmos ([3c052f8](https://github.com/digiz3d/dcr/commit/3c052f836f90f654189766330cdd123629155629))
+
 ## [1.1.1](https://github.com/digiz3d/dcr/compare/v1.1.0...v1.1.1) (2023-02-22)
 
 
