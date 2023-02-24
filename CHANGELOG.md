@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/digiz3d/dcr/compare/v1.1.3...v1.2.0) (2023-02-24)
+
+
+### Features
+
+* **Files:** allow removing a file ([#12](https://github.com/digiz3d/dcr/issues/12)) ([cd475bb](https://github.com/digiz3d/dcr/commit/cd475bb45c27cc44b85721449a3b65ee208b844d))
+
+
+### Bug Fixes
+
+* **CI:** properly build windows version ([8739f03](https://github.com/digiz3d/dcr/commit/8739f03eb5710be7c732a57487a794bfbeda9630))
+
 ## [1.1.3](https://github.com/digiz3d/dcr/compare/v1.1.2...v1.1.3) (2023-02-23)
 
 
