@@ -1,6 +1,6 @@
 import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
 import dayjs from 'dayjs'
-import Teeth from '../File/Teeth'
+import Teeth from '../ui/File/Teeth'
 
 import { MedicalFile, Settings } from '../types'
 import Table from './Table'

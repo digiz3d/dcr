@@ -1,24 +1,32 @@
 import clsx from 'clsx'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import File from './File/File'
-import NoFile from './NoFile/NoFile'
+import File from './ui/File'
+import NoFile from './ui/NoFile/NoFile'
 import type { MedicalFile } from './types'
-import Settings from './Settings'
-import useSettings from './Settings/use-settings'
-import Menu from './Menu'
+import Settings from './ui/Settings'
+import Menu from './ui/Menu'
+import { useAtom, useAtomValue } from 'jotai'
+import {
+  loadSettings,
+  persistSettings,
+  settingsAtom,
+  settingsCompleteAtom,
+} from './state/settings'
 
 function App() {
-  const {
-    settings,
-    settingsComplete,
-    settingsFields,
-    upsertSetting,
-    persistSettings,
-  } = useSettings()
+  const [settings, setSettings] = useAtom(settingsAtom)
+  const settingsComplete = useAtomValue(settingsCompleteAtom)
   const [isSettingsOpen, setIsSettingsOpen] = useState(!settingsComplete)
   const [medicalFiles, setMedicalFiles] = useState<MedicalFile[]>([])
   const [currentMedicalFileIndex, setCurrentMedicalFileIndex] = useState(0)
+
+  useEffect(() => {
+    (async() => {
+      const settings = await loadSettings()
+      if (settings) setSettings(settings)
+    })()
+  }, [])
 
   const onChange = useCallback(
     (newFileProperties: Partial<MedicalFile>) => {
@@ -37,13 +45,11 @@ function App() {
     <div className="flex bg-gray-100 h-screen overflow">
       {isSettingsOpen && (
         <Settings
-          settings={settings}
-          settingsComplete={settingsComplete}
-          settingsFields={settingsFields}
-          upsertSetting={upsertSetting}
           onClose={() => {
-            persistSettings()
-            setIsSettingsOpen(false)
+            ;(async () => {
+              await persistSettings(settings)
+              setIsSettingsOpen(false)
+            })()
           }}
         />
       )}
@@ -145,7 +151,6 @@ function App() {
       <div className="flex flex-1 h-screen overflow-y-auto">
         {medicalFiles[currentMedicalFileIndex] ? (
           <File
-            settings={settings}
             key={currentMedicalFileIndex}
             file={medicalFiles[currentMedicalFileIndex]}
             onChange={onChange}

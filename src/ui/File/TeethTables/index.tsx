@@ -1,4 +1,4 @@
-import type { MedicalFile, Tooth } from '../../types'
+import type { MedicalFile, Tooth } from '../../../types'
 
 import style from './index.module.scss'
 

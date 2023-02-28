@@ -1,7 +1,7 @@
 import { open } from '@tauri-apps/api/dialog'
 
-import type { MedicalFile } from '../../types'
-import { picturePathToJpegBlobPath } from '../../utils/photo'
+import type { MedicalFile } from '../../../types'
+import { picturePathToJpegBlobPath } from '../../../utils/photo'
 
 function DefaultPreviewDiv() {
   return (

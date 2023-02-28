@@ -5,23 +5,23 @@ dayjs.locale('fr')
 import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
 
-import useSettings from './use-settings'
 import Modal from '../Modal'
+import {
+  settingsAtom,
+  settingsCompleteAtom,
+  settingsFields,
+  upsertSettingAtom,
+} from '../../state/settings'
+import { useSetAtom,useAtomValue } from 'jotai'
 
 export default function Settings({
   onClose,
-  settingsComplete,
-  settings,
-  upsertSetting,
-  settingsFields,
 }: PropsWithChildren<{
   onClose: () => void
-  settingsComplete: ReturnType<typeof useSettings>['settingsComplete']
-  settings: ReturnType<typeof useSettings>['settings']
-  upsertSetting: ReturnType<typeof useSettings>['upsertSetting']
-  settingsFields: ReturnType<typeof useSettings>['settingsFields']
 }>) {
-  const complete = settingsComplete
+  const settings = useAtomValue(settingsAtom)
+  const upsertSettings = useSetAtom(upsertSettingAtom)
+  const complete = useAtomValue(settingsCompleteAtom)
   const fields = settingsFields
   return (
     <Modal>
@@ -42,10 +42,10 @@ export default function Settings({
                       type="text"
                       value={settings?.[field.name] || ''}
                       onChange={(e) =>
-                        upsertSetting({ [field.name]: e.target.value })
+                        upsertSettings({ [field.name]: e.target.value })
                       }
                       onBlur={(e) =>
-                        upsertSetting({ [field.name]: e.target.value.trim() })
+                        upsertSettings({ [field.name]: e.target.value.trim() })
                       }
                     />
                   </label>

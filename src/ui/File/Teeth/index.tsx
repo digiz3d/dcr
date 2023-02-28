@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import type { MedicalFile } from '../../types'
+import type { MedicalFile } from '../../../types'
 
 import style from './index.module.scss'
 

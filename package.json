@@ -16,6 +16,7 @@
     "dayjs": "^1.11.6",
     "events": "^3.3.0",
     "image-conversion": "^2.1.1",
+    "jotai": "^2.0.2",
     "localforage": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
