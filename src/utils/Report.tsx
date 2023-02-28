@@ -1,10 +1,11 @@
 import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
 import dayjs from 'dayjs'
-import Teeth from '../ui/File/Teeth'
 
-import { MedicalFile, Settings } from '../types'
+import { MedicalFile } from '../types'
 import Table from './Table'
 import Text from './Text'
+import { useAtomValue } from 'jotai'
+import { settingsAtom } from '../state/settings'
 
 const trad: Record<MedicalFile['teeth'][number]['treatmentType'], string> = {
   treatment: 'traitement',
@@ -49,7 +50,7 @@ export function teethToString(teeth: MedicalFile['teeth']) {
   return res
 }
 
-type Props = { file: MedicalFile; settings: Settings }
+type Props = { file: MedicalFile }
 
 const styles = StyleSheet.create({
   bold: { fontWeight: 'bold' },
@@ -99,7 +100,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Report({ file, settings }: Props) {
+export default function Report({ file }: Props) {
+  const settings = useAtomValue(settingsAtom)
   console.log(file.teeth)
 
   return (

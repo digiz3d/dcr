@@ -360,7 +360,7 @@ export default function File({
 
       {process.env.NODE_ENV !== 'production' && settings && (
         <PDFViewer className="h-[1000px]">
-          <Report file={file} settings={settings} />
+          <Report file={file} />
         </PDFViewer>
       )}
     </div>
