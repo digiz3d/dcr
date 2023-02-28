@@ -1,13 +1,13 @@
 import { PDFViewer } from '@react-pdf/renderer'
 import { useEffect, useState } from 'react'
-import type { MedicalFile } from '../../types'
-import { ClipboardDesmosOutput } from '../../utils/desmosReport'
-import Report from '../../utils/Report'
-import Photo from './Photo'
+import { useAtomValue } from 'jotai'
 
+import type { MedicalFile } from '../../types'
+import copyDesmosOutputToClipboard from '../../utils/desmosReport'
+import ReportPdf from '../../utils/Report'
+import Photo from './Photo'
 import Teeth from './Teeth'
 import { TeethComments, TeethTests } from './TeethTables'
-import {  useAtomValue } from 'jotai'
 import { settingsAtom } from '../../state/settings'
 
 export default function File({
@@ -352,7 +352,7 @@ export default function File({
         className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
           if (!settings) return alert('nooo')
-          ClipboardDesmosOutput(file)
+          copyDesmosOutputToClipboard(file)
         }}
       >
         Copy file to clipboard
@@ -360,7 +360,7 @@ export default function File({
 
       {process.env.NODE_ENV !== 'production' && settings && (
         <PDFViewer className="h-[1000px]">
-          <Report file={file} />
+          <ReportPdf file={file} settings={settings} />
         </PDFViewer>
       )}
     </div>

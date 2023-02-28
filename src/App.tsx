@@ -4,25 +4,24 @@ import { useCallback, useEffect, useState } from 'react'
 import File from './ui/File'
 import NoFile from './ui/NoFile/NoFile'
 import type { MedicalFile } from './types'
-import Settings from './ui/Settings'
+import SettingsModal from './ui/Settings'
 import Menu from './ui/Menu'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import {
   loadSettings,
-  persistSettings,
   settingsAtom,
   settingsCompleteAtom,
 } from './state/settings'
 
 function App() {
-  const [settings, setSettings] = useAtom(settingsAtom)
+  const setSettings = useSetAtom(settingsAtom)
   const settingsComplete = useAtomValue(settingsCompleteAtom)
   const [isSettingsOpen, setIsSettingsOpen] = useState(!settingsComplete)
   const [medicalFiles, setMedicalFiles] = useState<MedicalFile[]>([])
   const [currentMedicalFileIndex, setCurrentMedicalFileIndex] = useState(0)
 
   useEffect(() => {
-    (async() => {
+    ;(async () => {
       const settings = await loadSettings()
       if (settings) setSettings(settings)
     })()
@@ -44,12 +43,9 @@ function App() {
   return (
     <div className="flex bg-gray-100 h-screen overflow">
       {isSettingsOpen && (
-        <Settings
+        <SettingsModal
           onClose={() => {
-            ;(async () => {
-              await persistSettings(settings)
-              setIsSettingsOpen(false)
-            })()
+            setIsSettingsOpen(false)
           }}
         />
       )}

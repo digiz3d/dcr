@@ -1,20 +1,21 @@
+import { PropsWithChildren } from 'react'
+import { useSetAtom, useAtomValue } from 'jotai'
 import dayjs from 'dayjs'
+import clsx from 'clsx'
 import 'dayjs/locale/fr'
 dayjs.locale('fr')
 
-import clsx from 'clsx'
-import { PropsWithChildren } from 'react'
 
 import Modal from '../Modal'
 import {
+  persistSettings,
   settingsAtom,
   settingsCompleteAtom,
   settingsFields,
   upsertSettingAtom,
 } from '../../state/settings'
-import { useSetAtom,useAtomValue } from 'jotai'
 
-export default function Settings({
+export default function SettingsModal({
   onClose,
 }: PropsWithChildren<{
   onClose: () => void
@@ -58,7 +59,12 @@ export default function Settings({
                 'border bg-indigo-100 hover:bg-indigo-200',
               )}
               disabled={!complete}
-              onClick={() => onClose()}
+              onClick={() => {
+                ;(async () => {
+                  await persistSettings(settings)
+                  onClose()
+                })()
+              }}
             >
               Fermer
             </button>

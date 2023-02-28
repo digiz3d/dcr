@@ -4,8 +4,7 @@ import dayjs from 'dayjs'
 import { MedicalFile } from '../types'
 import Table from './Table'
 import Text from './Text'
-import { useAtomValue } from 'jotai'
-import { settingsAtom } from '../state/settings'
+import { Settings } from '../state/settings'
 
 const trad: Record<MedicalFile['teeth'][number]['treatmentType'], string> = {
   treatment: 'traitement',
@@ -50,7 +49,7 @@ export function teethToString(teeth: MedicalFile['teeth']) {
   return res
 }
 
-type Props = { file: MedicalFile }
+type Props = { file: MedicalFile; settings: Settings }
 
 const styles = StyleSheet.create({
   bold: { fontWeight: 'bold' },
@@ -100,8 +99,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Report({ file }: Props) {
-  const settings = useAtomValue(settingsAtom)
+export default function ReportPdf({ file, settings }: Props) {
   console.log(file.teeth)
 
   return (
