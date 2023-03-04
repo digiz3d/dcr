@@ -1,10 +1,10 @@
 import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer'
 import dayjs from 'dayjs'
-import Teeth from '../File/Teeth'
 
-import { MedicalFile, Settings } from '../types'
+import { MedicalFile } from '../types'
 import Table from './Table'
 import Text from './Text'
+import { Settings } from '../state/settings'
 
 const trad: Record<MedicalFile['teeth'][number]['treatmentType'], string> = {
   treatment: 'traitement',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Report({ file, settings }: Props) {
+export default function ReportPdf({ file, settings }: Props) {
   console.log(file.teeth)
 
   return (

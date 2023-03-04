@@ -1,27 +1,28 @@
+import { PropsWithChildren } from 'react'
+import { useSetAtom, useAtomValue } from 'jotai'
 import dayjs from 'dayjs'
+import clsx from 'clsx'
 import 'dayjs/locale/fr'
 dayjs.locale('fr')
 
-import clsx from 'clsx'
-import { PropsWithChildren } from 'react'
 
-import useSettings from './use-settings'
 import Modal from '../Modal'
-
-export default function Settings({
-  onClose,
-  settingsComplete,
-  settings,
-  upsertSetting,
+import {
+  persistSettings,
+  settingsAtom,
+  settingsCompleteAtom,
   settingsFields,
+  upsertSettingAtom,
+} from '../../state/settings'
+
+export default function SettingsModal({
+  onClose,
 }: PropsWithChildren<{
   onClose: () => void
-  settingsComplete: ReturnType<typeof useSettings>['settingsComplete']
-  settings: ReturnType<typeof useSettings>['settings']
-  upsertSetting: ReturnType<typeof useSettings>['upsertSetting']
-  settingsFields: ReturnType<typeof useSettings>['settingsFields']
 }>) {
-  const complete = settingsComplete
+  const settings = useAtomValue(settingsAtom)
+  const upsertSettings = useSetAtom(upsertSettingAtom)
+  const complete = useAtomValue(settingsCompleteAtom)
   const fields = settingsFields
   return (
     <Modal>
@@ -42,10 +43,10 @@ export default function Settings({
                       type="text"
                       value={settings?.[field.name] || ''}
                       onChange={(e) =>
-                        upsertSetting({ [field.name]: e.target.value })
+                        upsertSettings({ [field.name]: e.target.value })
                       }
                       onBlur={(e) =>
-                        upsertSetting({ [field.name]: e.target.value.trim() })
+                        upsertSettings({ [field.name]: e.target.value.trim() })
                       }
                     />
                   </label>
@@ -58,7 +59,12 @@ export default function Settings({
                 'border bg-indigo-100 hover:bg-indigo-200',
               )}
               disabled={!complete}
-              onClick={() => onClose()}
+              onClick={() => {
+                ;(async () => {
+                  await persistSettings(settings)
+                  onClose()
+                })()
+              }}
             >
               Fermer
             </button>

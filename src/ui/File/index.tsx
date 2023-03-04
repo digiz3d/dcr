@@ -1,23 +1,23 @@
 import { PDFViewer } from '@react-pdf/renderer'
 import { useEffect, useState } from 'react'
-import useSettings from '../Settings/use-settings'
-import type { MedicalFile } from '../types'
-import { ClipboardDesmosOutput } from '../utils/desmosReport'
-import Report from '../utils/Report'
-import Photo from './Photo'
+import { useAtomValue } from 'jotai'
 
+import type { MedicalFile } from '../../types'
+import copyDesmosOutputToClipboard from '../../utils/desmosReport'
+import ReportPdf from '../../utils/Report'
+import Photo from './Photo'
 import Teeth from './Teeth'
 import { TeethComments, TeethTests } from './TeethTables'
+import { settingsAtom } from '../../state/settings'
 
 export default function File({
   file,
   onChange,
-  settings,
 }: {
   file: MedicalFile
   onChange: (file: Partial<MedicalFile>) => void
-  settings: ReturnType<typeof useSettings>['settings']
 }) {
+  const settings = useAtomValue(settingsAtom)
   const [x, setX] = useState(0)
 
   useEffect(() => {
@@ -341,7 +341,7 @@ export default function File({
         className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
           if (!settings) return alert('nooo')
-          const { generatePdf } = await import('../utils/generatePdf')
+          const { generatePdf } = await import('../../utils/generatePdf')
           await generatePdf(file, settings)
         }}
       >
@@ -352,7 +352,7 @@ export default function File({
         className="font-bold p-5 self-center rounded-3xl cursor-pointer bg-indigo-200 text-indigo-900"
         onClick={async () => {
           if (!settings) return alert('nooo')
-          ClipboardDesmosOutput(file)
+          copyDesmosOutputToClipboard(file)
         }}
       >
         Copy file to clipboard
@@ -360,7 +360,7 @@ export default function File({
 
       {process.env.NODE_ENV !== 'production' && settings && (
         <PDFViewer className="h-[1000px]">
-          <Report file={file} settings={settings} />
+          <ReportPdf file={file} settings={settings} />
         </PDFViewer>
       )}
     </div>

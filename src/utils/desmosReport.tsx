@@ -1,10 +1,10 @@
 import { MedicalFile } from '../types'
 import { teethToString } from './Report'
 
-import { writeText, readText } from '@tauri-apps/api/clipboard'
+import { writeText } from '@tauri-apps/api/clipboard'
 import dayjs from 'dayjs'
 
-export async function ClipboardDesmosOutput(file: MedicalFile) {
+export default async function copyDesmosOutputToClipboard(file: MedicalFile) {
   let res: string = ''
   res += file.gender == 'm' ? 'Patient adressé' : 'Patiente adressée'
   res +=
