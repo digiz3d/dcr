@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
   title: { textAlign: 'center', fontSize: '24pt' },
   date: { textAlign: 'right', fontSize: '10pt' },
   sign: { textAlign: 'right', fontSize: '10pt' },
-
+  reportContent: {
+    textAlign: 'justify',
+  },
   image_container: {
     alignContent: 'flex-start',
     justifyContent: 'center',
@@ -173,112 +175,119 @@ export default function ReportPdf({ file, settings }: Props) {
           </Text>
         </View>
 
-        {/* Intro */}
-        <View wrap={false}>
-          <Text style={styles.margin_s}>{`${
-            file.dentistGender == 'm' ? 'Cher confrère,' : 'Chère consœur,'
-          }`}</Text>
-          <Text style={styles.margin_l}>
-            {`Je vous remercie de m'avoir adressé votre ${
-              file.gender == 'm' ? 'patient, Monsieur' : 'patiente, Madame'
-            } ${file.patientLastName} ${file.patientFirstName}, ${
-              file.gender == 'm' ? 'né' : 'née'
-            } le ${file.birthDate.toLocaleDateString()}, pour ${teethToString(
-              file.teeth,
-            )}.`}
-          </Text>
-        </View>
-
-        <View style={[styles.border, styles.margin_l]}></View>
-
-        {/* Anamnèse */}
-        <View style={styles.margin_l} wrap={false}>
-          <Text style={[styles.margin_s, styles.bold]}>Anamnèse</Text>
-          <Text>Antécédents médicaux : {file.anteriorMedical}</Text>
-          <Text>Médicaments : {file.medications}</Text>
-          <Text style={styles.margin_s}>Allergie : {file.allergies}</Text>
-          <Text>Historique dentaire : {file.anamnesis}</Text>
-          <Text style={styles.margin_s}>
-            Symptomatologie : {file.symtpoAnte}
-          </Text>
-        </View>
-
-        <View style={[styles.border, styles.margin_l]}></View>
-
-        {/* Examen clinique */}
-        <View style={styles.margin_l}>
-          <Text style={[styles.margin_s, styles.bold]}>Examen clinique</Text>
-          <Text style={[styles.margin_s]}>{file.clinicalExam}</Text>
-
-          <Text style={[styles.margin_s]}>
-            {file.teeth
-              .filter((x) => {
-                return x.restoration != '' || x.underMicroscope != ''
-              })
-              .map((x) => {
-                let res = ''
-                if (file.teeth.length > 1) res += `- ${x.id} - \n`
-                if (x.restoration != '')
-                  res += `Restauration : ${x.restoration}\n`
-                if (x.underMicroscope != '')
-                  res += `Sous microscope : ${x.underMicroscope}\n`
-                return res
-              })}
-          </Text>
-
-          <Table teeth={file.teeth}></Table>
-        </View>
-
-        <View style={[styles.border, styles.margin_l]}></View>
-
-        {/* Examen radiologique */}
-        <Text style={[styles.margin_s, styles.bold]}>Examen radiologique</Text>
-        <View style={styles.margin_l}>
-          <View style={[styles.margin_m, styles.image_container]}>
-            {file.photoOptimized &&
-              file.photoOptimized.map((src) => (
-                <Image key={src} style={styles.image} source={src} />
-              ))}
+        {/*REPORT CONTENT*/}
+        <View style={styles.reportContent}>
+          {/* Intro */}
+          <View wrap={false}>
+            <Text style={styles.margin_s}>{`${
+              file.dentistGender == 'm' ? 'Cher confrère,' : 'Chère consœur,'
+            }`}</Text>
+            <Text style={styles.margin_l}>
+              {`Je vous remercie de m'avoir adressé votre ${
+                file.gender == 'm' ? 'patient, Monsieur' : 'patiente, Madame'
+              } ${file.patientLastName} ${file.patientFirstName}, ${
+                file.gender == 'm' ? 'né' : 'née'
+              } le ${file.birthDate.toLocaleDateString()}, pour ${teethToString(
+                file.teeth,
+              )}.`}
+            </Text>
           </View>
-          {file.radioExamRA && (
+          <View style={[styles.border, styles.margin_l]}></View>
+          {/* Anamnèse */}
+          <View style={styles.margin_l} wrap={false}>
+            <Text style={[styles.margin_s, styles.bold]}>Anamnèse</Text>
+            <Text>Antécédents médicaux : {file.anteriorMedical}</Text>
+            <Text>Médicaments : {file.medications}</Text>
+            <Text style={styles.margin_m}>Allergie : {file.allergies}</Text>
+            <Text style={styles.margin_m}>
+              Historique dentaire : {file.anamnesis}
+            </Text>
+            <Text style={styles.margin_m}>
+              Symptomatologie : {file.symtpoAnte}
+            </Text>
+          </View>
+          <View style={[styles.border, styles.margin_l]}></View>
+          {/* Examen clinique */}
+          <View style={styles.margin_l}>
+            <View wrap={false}>
+              <Text style={[styles.margin_s, styles.bold]}>
+                Examen clinique
+              </Text>
+              <Text style={[styles.margin_s]}>{file.clinicalExam}</Text>
+            </View>
+
             <Text style={[styles.margin_s]}>
-              Examen radiographique rétro-alvéolaire :
+              {file.teeth
+                .filter((x) => {
+                  return x.restoration != '' || x.underMicroscope != ''
+                })
+                .map((x) => {
+                  let res = ''
+                  if (file.teeth.length > 1) res += `- ${x.id} - \n`
+                  if (x.restoration != '')
+                    res += `Restauration : ${x.restoration}\n`
+                  if (x.underMicroscope != '')
+                    res += `Sous microscope : ${x.underMicroscope}\n`
+                  return res
+                })}
             </Text>
-          )}
-          {file.radioExamRA && (
-            <Text style={styles.margin_l}>{file.radioExamRA}</Text>
-          )}
-          {file.radioExamCBCT && (
-            <Text style={[styles.margin_s]}>Examen radiographique CBCT :</Text>
-          )}
-          {file.radioExamCBCT && (
-            <Text style={styles.margin_s}>{file.radioExamCBCT}</Text>
-          )}
-        </View>
 
-        <View style={[styles.border, styles.margin_l]}></View>
-
-        {/* Diagnostic */}
-        <View style={styles.margin_l} wrap={false}>
-          <Text style={[styles.margin_s, styles.bold]}>Diagnostic</Text>
-          <Text>{file.diagnostic}</Text>
-        </View>
-
-        <View style={[styles.border, styles.margin_l]}></View>
-
-        {/* Attitude thérapeutique */}
-        <View style={{ display: 'flex' }} wrap={false}>
-          <View style={styles.margin_xxl}>
-            <Text style={[styles.margin_s, styles.bold]}>
-              Attitude thérapeutique
-            </Text>
-            <Text>{file.treatment}</Text>
+            <Table teeth={file.teeth}></Table>
           </View>
+          <View style={[styles.border, styles.margin_l]}></View>
+          {/* Examen radiologique */}
+          <Text style={[styles.margin_s, styles.bold]}>
+            Examen radiologique
+          </Text>
+          <View style={styles.margin_l}>
+            <View style={[styles.margin_m, styles.image_container]}>
+              {file.photoOptimized &&
+                file.photoOptimized.map((src) => (
+                  <Image key={src} style={styles.image} source={src} />
+                ))}
+            </View>
+            <View wrap={false}>
+              {file.radioExamRA && (
+                <Text style={[styles.margin_s]}>
+                  Examen radiographique rétro-alvéolaire :
+                </Text>
+              )}
+              {file.radioExamRA && (
+                <Text style={styles.margin_l}>{file.radioExamRA}</Text>
+              )}
+            </View>
+            <View wrap={false}>
+              {file.radioExamCBCT && (
+                <Text style={[styles.margin_s]}>
+                  Examen radiographique CBCT :
+                </Text>
+              )}
+              {file.radioExamCBCT && (
+                <Text style={styles.margin_s}>{file.radioExamCBCT}</Text>
+              )}
+            </View>
+          </View>
+          <View style={[styles.border, styles.margin_l]}></View>
+          {/* Diagnostic */}
+          <View style={styles.margin_l} wrap={false}>
+            <Text style={[styles.margin_s, styles.bold]}>Diagnostic</Text>
+            <Text>{file.diagnostic}</Text>
+          </View>
+          <View style={[styles.border, styles.margin_l]}></View>
+          {/* Attitude thérapeutique */}
+          <View style={{ display: 'flex' }} wrap={false}>
+            <View style={styles.margin_xxl}>
+              <Text style={[styles.margin_s, styles.bold]}>
+                Attitude thérapeutique
+              </Text>
+              <Text>{file.treatment}</Text>
+            </View>
 
-          {/* Signature */}
-          <View style={styles.sign}>
-            <Text style={styles.margin_s}>Confraternellement,</Text>
-            <Text>{settings.doctorName}</Text>
+            {/* Signature */}
+            <View style={styles.sign}>
+              <Text style={styles.margin_s}>Confraternellement,</Text>
+              <Text>{settings.doctorName}</Text>
+            </View>
           </View>
         </View>
       </Page>
