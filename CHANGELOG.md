@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/digiz3d/dcr/compare/v1.2.0...v1.2.1) (2023-03-12)
+
+
+### Bug Fixes
+
+* Justified report content + anamnesis margin ([89a6d31](https://github.com/digiz3d/dcr/commit/89a6d318d44ad4f10700cf7b825f3254fcabe5cf))
+
 ## [1.2.0](https://github.com/digiz3d/dcr/compare/v1.1.3...v1.2.0) (2023-02-24)
 
 
